@@ -91,18 +91,27 @@ function App() {
               
               <div className="features">
                 <div className="feature-item">
-                  <h3>Slayer tehdidinin seviyesi en yüksekte</h3>
-                  <p>Omuzuna monte edilmiş alev makinesi, bileğe monte bıçak, yükseltilmiş silahlar, modlar ve yeteneklerle donanmış bir şekilde, her zamankinden daha hızlı, daha güçlü ve çok yönlüsünüz.</p>
+                  <h3>Gelişmiş Silah Sistemi</h3>
+                  <p>Yeni silahlar, modifikasyonlar ve yükseltmelerle donatılmış bir cephaneliğe sahip olun. Super Shotgun'a monte edilmiş Meat Hook ile düşmanlarınıza doğru hızla ilerleyin, Ballista ile güçlü enerji mızrakları fırlatın ve Crucible kılıcı ile iblisleri tek hamlede ikiye bölün.</p>
+                  <div className="feature-image-placeholder">
+                    {<img src='/src/assets/images/DOOM Eternal ana özellikleri/1.webp'></img>}
+                  </div>
                 </div>
                 
                 <div className="feature-item">
-                  <h3>Şeytani üçleme</h3>
-                  <p>Düşmanlarınızdan ihtiyacınız olanı alın: Öldürücü darbe karşılığında ekstra sağlık, zırh için yakma ve iblisleri testereyle keserek daha fazla cephane toplama özelliğiyle en büyük iblis avcısı olun.</p>
+                  <h3>Çevresel Yıkım ve Keşif</h3>
+                  <p>Tamamen yıkılabilir iblisler ve çevreler ile daha önce hiç olmadığı kadar tatmin edici bir savaş deneyimi yaşayın. Yeni tırmanma yetenekleri, çift dash ve gelişmiş havada manevra kabiliyeti ile daha önce ulaşılamayan alanlara erişin ve gizli ödülleri keşfedin.</p>
+                  <div className="feature-image-placeholder">
+                    {<img src='/src/assets/images/DOOM Eternal ana özellikleri/2.webp'></img>}
+                  </div>
                 </div>
                 
                 <div className="feature-item">
-                  <h3>BATTLEMODE'a girin</h3>
-                  <p>2'ye karşı 1 çok oyunculu yepyeni bir deneyim. Tepeden tırnağa silahlı bir DOOM Slayer, oyuncuların kontrolündeki iki iblisle karşı karşıya kalarak, heyecanlı bir birinci şahıs çatışmalarda en iyisi olmak için beş tur boyunca mücadele edecek.</p>
+                  <h3>Cehennem Ordusu Genişliyor</h3>
+                  <p>Marauder, Doom Hunter ve Gladyator gibi yeni ve zorlu düşmanlarla karşılaşın. Her biri benzersiz saldırı desenleri ve zayıf noktalarıyla, savaş stratejinizi sürekli değiştirmenizi ve her karşılaşmaya uyum sağlamanızı gerektirecek. Cehennemin en tehlikeli yaratıklarını alt etmek için tüm yeteneklerinizi kullanın.</p>
+                  <div className="feature-image-placeholder">
+                    {<img src='/src/assets/images/DOOM Eternal ana özellikleri/3.webp'></img>}
+                  </div>
                 </div>
               </div>
               
