@@ -45,7 +45,10 @@ function App() {
                   width: '120px',
                   height: 'auto',
                   objectFit: 'contain',
-                  marginRight: '20px'
+                  marginRight: '20px',
+                  borderRadius: '50%',
+                  background: '#003087',
+                  padding: '10px'
                 }}
               />
             </div>
@@ -392,7 +395,10 @@ function App() {
                 style={{
                   width: '150px',
                   height: 'auto',
-                  marginBottom: '20px'
+                  marginBottom: '20px',
+                  borderRadius: '50%',
+                  background: '#003087',
+                  padding: '10px'
                 }}
               />
             </div>
