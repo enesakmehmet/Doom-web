@@ -491,6 +491,113 @@ function App() {
             </section>
           )}
 
+          {/* DLC Section */}
+          {activeTab === 'dlc' && (
+            <section className="dlc-section">
+              <h2>Eklentiler</h2>
+              <p>DOOM Eternal deneyiminizi genişletin ve yeni içeriklerle oyunu keşfetmeye devam edin.</p>
+              
+              <div className="dlc-cards">
+                <div className="dlc-card">
+                  <img src="/src/assets/images/dlc/year-one-pass.webp" alt="Year One Pass" />
+                  <h3>Year One Pass</h3>
+                  <p>The Ancient Gods Part One ve Part Two genişletme paketlerini içerir.</p>
+                  <div className="dlc-features">
+                    <div className="dlc-feature">
+                      <span className="dlc-icon">✓</span>
+                      <span>İki tam hikaye DLC'si</span>
+                    </div>
+                    <div className="dlc-feature">
+                      <span className="dlc-icon">✓</span>
+                      <span>Yeni silahlar ve yetenekler</span>
+                    </div>
+                    <div className="dlc-feature">
+                      <span className="dlc-icon">✓</span>
+                      <span>Yeni düşmanlar ve bölgeler</span>
+                    </div>
+                  </div>
+                  <button className="btn-buy">SATIN AL</button>
+                </div>
+                
+                <div className="dlc-card">
+                  <img src="/src/assets/images/dlc/rip-tear-pack.webp" alt="Rip & Tear Pack" />
+                  <h3>Rip & Tear Pack</h3>
+                  <p>DOOT Revenant oyuncu görünümü, Cultist Base Master seviyesi ve klasik silah sesleri paketi.</p>
+                  <div className="dlc-features">
+                    <div className="dlc-feature">
+                      <span className="dlc-icon">✓</span>
+                      <span>Özel oyuncu görünümü</span>
+                    </div>
+                    <div className="dlc-feature">
+                      <span className="dlc-icon">✓</span>
+                      <span>Bonus seviye</span>
+                    </div>
+                    <div className="dlc-feature">
+                      <span className="dlc-icon">✓</span>
+                      <span>Nostaljik silah sesleri</span>
+                    </div>
+                  </div>
+                  <button className="btn-buy">SATIN AL</button>
+                </div>
+                
+                <div className="dlc-card">
+                  <img src="/src/assets/images/dlc/cosmetic-packs.webp" alt="Cosmetic Packs" />
+                  <h3>Cosmetic Packs</h3>
+                  <p>Çeşitli kozmetik paketleri ile Slayer'ınızı özelleştirin.</p>
+                  <div className="dlc-features">
+                    <div className="dlc-feature">
+                      <span className="dlc-icon">✓</span>
+                      <span>Zırh görünümleri</span>
+                    </div>
+                    <div className="dlc-feature">
+                      <span className="dlc-icon">✓</span>
+                      <span>Silah kaplamaları</span>
+                    </div>
+                    <div className="dlc-feature">
+                      <span className="dlc-icon">✓</span>
+                      <span>Oyuncu simgeleri</span>
+                    </div>
+                  </div>
+                  <button className="btn-buy">SATIN AL</button>
+                </div>
+              </div>
+              
+              <div className="dlc-bundle">
+                <div className="dlc-bundle-content">
+                  <div className="dlc-bundle-info">
+                    <h3>DOOM Eternal Deluxe Edition</h3>
+                    <p>Tüm içerikleri tek pakette alın ve %25 tasarruf edin!</p>
+                    <div className="dlc-features">
+                      <div className="dlc-feature">
+                        <span className="dlc-icon">✓</span>
+                        <span>Ana oyun</span>
+                      </div>
+                      <div className="dlc-feature">
+                        <span className="dlc-icon">✓</span>
+                        <span>Year One Pass</span>
+                      </div>
+                      <div className="dlc-feature">
+                        <span className="dlc-icon">✓</span>
+                        <span>Tüm kozmetik paketler</span>
+                      </div>
+                      <div className="dlc-feature">
+                        <span className="dlc-icon">✓</span>
+                        <span>Dijital artbook</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="dlc-bundle-action">
+                    <div className="dlc-price">
+                      <span className="dlc-old-price">₺1299</span>
+                      <span className="dlc-new-price">₺974</span>
+                    </div>
+                    <button className="btn-buy btn-bundle">DELUXE EDITION SATIN AL</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
           {/* Horde Mode Section */}
           {activeTab === 'horde' && (
             <section className="horde-section">
@@ -555,34 +662,6 @@ function App() {
             </section>
           )}
 
-          {/* DLC Section */}
-          {activeTab === 'dlc' && (
-            <section className="dlc-section">
-              <h2>Eklentiler</h2>
-              <p>DOOM Eternal deneyiminizi genişletin ve yeni içeriklerle oyunu keşfetmeye devam edin.</p>
-              
-              <div className="dlc-cards">
-                <div className="dlc-card">
-                  <h3>Year One Pass</h3>
-                  <p>The Ancient Gods Part One ve Part Two genişletme paketlerini içerir.</p>
-                  <button className="btn-buy">Satın Al</button>
-                </div>
-                
-                <div className="dlc-card">
-                  <h3>Rip & Tear Pack</h3>
-                  <p>DOOT Revenant oyuncu görünümü, Cultist Base Master seviyesi ve klasik silah sesleri paketi.</p>
-                  <button className="btn-buy">Satın Al</button>
-                </div>
-                
-                <div className="dlc-card">
-                  <h3>Cosmetic Packs</h3>
-                  <p>Çeşitli kozmetik paketleri ile Slayer'ınızı özelleştirin.</p>
-                  <button className="btn-buy">Satın Al</button>
-                </div>
-              </div>
-            </section>
-          )}
-
           {/* Ancient Gods Section */}
           {activeTab === 'ancient-gods' && (
             <section className="ancient-gods-section">
@@ -590,14 +669,16 @@ function App() {
               <p>DOOM Eternal'ın epik hikayesini genişleten iki bölümlük DLC serisi.</p>
               
               <div className="ancient-gods-content">
-                <div className="ancient-gods-part">
-                  <h3>Part One: Yeni Tehdit</h3>
-                  <p>İnsanlığı kurtardıktan sonra, Slayer yeni bir görevle karşı karşıya: dengeyi korumak için Maykr'ın yerini alacak bir varlık bulmak. Cehennemin derinliklerine inin ve yeni düşmanlarla savaşın.</p>
-                </div>
-                
-                <div className="ancient-gods-part">
-                  <h3>Part Two: Son Savaş</h3>
-                  <p>Slayer'ın destansı yolculuğunun sonuna tanık olun. Dark Lord ile nihai karşılaşma için hazırlanın ve kaderinizi mühürleyin.</p>
+                <div className="ancient-gods-parts">
+                  <div className="ancient-gods-part">
+                    <h3>Part One: Yeni Tehdit</h3>
+                    <p>İnsanlığı kurtardıktan sonra, Slayer yeni bir görevle karşı karşıya: dengeyi korumak için Maykr'ın yerini alacak bir varlık bulmak. Cehennemin derinliklerine inin ve yeni düşmanlarla savaşın.</p>
+                  </div>
+                  
+                  <div className="ancient-gods-part">
+                    <h3>Part Two: Son Savaş</h3>
+                    <p>Slayer'ın destansı yolculuğunun sonuna tanık olun. Dark Lord ile nihai karşılaşma için hazırlanın ve kaderinizi mühürleyin.</p>
+                  </div>
                 </div>
                 
                 <div className="ancient-gods-features">
@@ -608,12 +689,12 @@ function App() {
                   
                   <div className="ag-feature">
                     <h4>Yeni Ortamlar</h4>
-                    <p>Daha önce görülmemiş cehennem boyutlarını ve antik tanrıların krallıklarını keşfedin.</p>
+                    <p>Daha önce görülmemiş cehennem boyutlarını ve antik tanrıların krallıklarını keşfedin. Yepyeni haritalar ve zorlu bölgeler sizi bekliyor.</p>
                   </div>
                   
                   <div className="ag-feature">
                     <h4>Zorlu Düşmanlar</h4>
-                    <p>Yeni düşman türleri ve daha zorlu patron savaşlarıyla karşılaşın.</p>
+                    <p>Yeni düşman türleri ve zorlu boss savaşlarıyla karşılaşın. Her köşede sizi bekleyen yeni tehditlerle mücadele edin.</p>
                   </div>
                 </div>
               </div>
