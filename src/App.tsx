@@ -8,13 +8,27 @@ function App() {
   const [currentResolution, setCurrentResolution] = useState('720p'); // Default resolution
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // Track current image index
   const [modalImageIndex, setModalImageIndex] = useState(0); // Track current modal image index
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0); // Track current video index
   const videoRef = useRef<HTMLVideoElement>(null);
+  const secondVideoRef = useRef<HTMLVideoElement>(null);
   
   // Available resolutions for the video
   const resolutions = [
     { label: '480p', value: '480p' },
     { label: '720p', value: '720p' },
     { label: '1080p', value: '1080p' }
+  ];
+
+  // Videos data
+  const videos = [
+    {
+      src: "/src/assets/images/DOOM The Dark Ages   Official Trailer 1 (4K)   Coming 2025.mp4",
+      title: "DOOM The Dark Ages - Official Trailer"
+    },
+    {
+      src: "/src/assets/images/Doom Eternal _ Phobos Gameplay Trailer _ PS4.mp4", 
+      title: "DOOM Eternal Gameplay Trailer"
+    }
   ];
 
   // All images that can be displayed in the modal
@@ -74,6 +88,9 @@ function App() {
     if (videoRef.current) {
       videoRef.current.volume = newVolume;
     }
+    if (secondVideoRef.current) {
+      secondVideoRef.current.volume = newVolume;
+    }
   };
 
   // Handle resolution change
@@ -88,6 +105,9 @@ function App() {
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.volume = volume;
+    }
+    if (secondVideoRef.current) {
+      secondVideoRef.current.volume = volume;
     }
   }, [volume]);
 
@@ -118,6 +138,18 @@ function App() {
     setSelectedImage(allImages[
       modalImageIndex === 0 ? allImages.length - 1 : modalImageIndex - 1
     ].src);
+  };
+
+  // Handle next video
+  const handleNextVideo = () => {
+    setCurrentVideoIndex(prevIndex => (prevIndex + 1) % videos.length);
+  };
+
+  // Handle previous video
+  const handlePrevVideo = () => {
+    setCurrentVideoIndex(prevIndex => 
+      prevIndex === 0 ? videos.length - 1 : prevIndex - 1
+    );
   };
 
   return (
@@ -263,51 +295,102 @@ function App() {
                 </div>
                 
                 <div className="gameplay-media">
-                  <div className="gameplay-video">
-                    <video 
-                      ref={videoRef}
-                      src="/src/assets/images/DOOM The Dark Ages   Official Trailer 1 (4K)   Coming 2025.mp4" 
-                      controls 
-                      poster="/images/doom-gameplay.jpg"
-                      className="embedded-video"
-                      width="100%"
-                      preload="metadata"
+                  <h3>Oyun Videoları</h3>
+                  <div className="video-carousel">
+                    <button 
+                      className="nav-btn prev-btn" 
+                      onClick={handlePrevVideo}
+                      aria-label="Önceki video"
                     >
-                      Tarayıcınız video etiketini desteklemiyor.
-                    </video>
+                      &lt;
+                    </button>
                     
-                    <div className="video-controls-custom">
-                      <div className="video-control-group">
-                        <label htmlFor="volume-control">Ses:</label>
-                        <input 
-                          type="range" 
-                          id="volume-control" 
-                          min="0" 
-                          max="1" 
-                          step="0.01" 
-                          value={volume} 
-                          onChange={handleVolumeChange}
-                          className="volume-slider"
-                        />
-                        <span className="volume-value">{Math.round(volume * 100)}%</span>
-                      </div>
+                    <div className="gameplay-video">
+                      {currentVideoIndex === 0 && (
+                        <div className="video-container">
+                          <h4>{videos[0].title}</h4>
+                          <video 
+                            ref={videoRef}
+                            src={videos[0].src} 
+                            controls 
+                            poster="/images/doom-gameplay.jpg"
+                            className="embedded-video"
+                            width="100%"
+                            preload="metadata"
+                          >
+                            Tarayıcınız video etiketini desteklemiyor.
+                          </video>
+                        </div>
+                      )}
                       
-                      <div className="video-control-group">
-                        <label htmlFor="resolution-control">Çözünürlük:</label>
-                        <select 
-                          id="resolution-control" 
-                          value={currentResolution} 
-                          onChange={handleResolutionChange}
-                          className="resolution-select"
-                        >
-                          {resolutions.map((res) => (
-                            <option key={res.value} value={res.value}>
-                              {res.label}
-                            </option>
-                          ))}
-                        </select>
+                      {currentVideoIndex === 1 && (
+                        <div className="video-container">
+                          <h4>{videos[1].title}</h4>
+                          <video 
+                            ref={secondVideoRef}
+                            src={videos[1].src} 
+                            controls 
+                            poster="/images/doom-gameplay.jpg"
+                            className="embedded-video"
+                            width="100%"
+                            preload="metadata"
+                          >
+                            Tarayıcınız video etiketini desteklemiyor.
+                          </video>
+                        </div>
+                      )}
+                      
+                      <div className="video-controls-custom">
+                        <div className="video-control-group">
+                          <label htmlFor="volume-control">Ses:</label>
+                          <input 
+                            type="range" 
+                            id="volume-control" 
+                            min="0" 
+                            max="1" 
+                            step="0.01" 
+                            value={volume} 
+                            onChange={handleVolumeChange}
+                            className="volume-slider"
+                          />
+                          <span className="volume-value">{Math.round(volume * 100)}%</span>
+                        </div>
+                        
+                        <div className="video-control-group">
+                          <label htmlFor="resolution-control">Çözünürlük:</label>
+                          <select 
+                            id="resolution-control" 
+                            value={currentResolution} 
+                            onChange={handleResolutionChange}
+                            className="resolution-select"
+                          >
+                            {resolutions.map((res) => (
+                              <option key={res.value} value={res.value}>
+                                {res.label}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                       </div>
                     </div>
+                    
+                    <button 
+                      className="nav-btn next-btn" 
+                      onClick={handleNextVideo}
+                      aria-label="Sonraki video"
+                    >
+                      &gt;
+                    </button>
+                  </div>
+                  
+                  <div className="video-indicators">
+                    {videos.map((_, index) => (
+                      <span 
+                        key={index}
+                        className={`indicator ${index === currentVideoIndex ? 'active' : ''}`}
+                        onClick={() => setCurrentVideoIndex(index)}
+                      />
+                    ))}
                   </div>
                   
                   <div className="screenshots">
