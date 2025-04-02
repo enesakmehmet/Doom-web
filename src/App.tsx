@@ -1,16 +1,123 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './App.css'
 
 function App() {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [volume, setVolume] = useState(0.5); // Default volume at 50%
+  const [currentResolution, setCurrentResolution] = useState('720p'); // Default resolution
+  const [currentImageIndex, setCurrentImageIndex] = useState(0); // Track current image index
+  const [modalImageIndex, setModalImageIndex] = useState(0); // Track current modal image index
+  const videoRef = useRef<HTMLVideoElement>(null);
+  
+  // Available resolutions for the video
+  const resolutions = [
+    { label: '480p', value: '480p' },
+    { label: '720p', value: '720p' },
+    { label: '1080p', value: '1080p' }
+  ];
+
+  // All images that can be displayed in the modal
+  const allImages = [
+    // Screenshot images
+    { src: "/src/assets/images/ekran ss/1.webp", alt: "Screenshot 1", category: "screenshots" },
+    { src: "/src/assets/images/ekran ss/2.webp", alt: "Screenshot 2", category: "screenshots" },
+    { src: "/src/assets/images/ekran ss/3.webp", alt: "Screenshot 3", category: "screenshots" },
+    { src: "/src/assets/images/ekran ss/4.webp", alt: "Screenshot 4", category: "screenshots" },
+    // Feature images
+    { src: "/src/assets/images/DOOM Eternal ana özellikleri/1.webp", alt: "Feature 1", category: "features" },
+    { src: "/src/assets/images/DOOM Eternal ana özellikleri/2.webp", alt: "Feature 2", category: "features" },
+    { src: "/src/assets/images/DOOM Eternal ana özellikleri/3.webp", alt: "Feature 3", category: "features" },
+    // Horde mode images
+    { src: "/src/assets/images/hard mode/1.webp", alt: "Horde Mode 1", category: "horde" },
+    { src: "/src/assets/images/hard mode/2.webp", alt: "Horde Mode 2", category: "horde" },
+    { src: "/src/assets/images/hard mode/3.webp", alt: "Horde Mode 3", category: "horde" },
+    { src: "/src/assets/images/hard mode/4.webp", alt: "Horde Mode 4", category: "horde" }
+  ];
+
+  // Screenshots data (subset of allImages)
+  const screenshots = allImages.filter(img => img.category === "screenshots");
+
+  // Number of images to show at once
+  const imagesPerView = 2;
+
+  // Handle next images
+  const handleNextImages = () => {
+    setCurrentImageIndex(prevIndex => 
+      prevIndex + imagesPerView >= screenshots.length 
+        ? 0 
+        : prevIndex + imagesPerView
+    );
+  };
+
+  // Handle previous images
+  const handlePrevImages = () => {
+    setCurrentImageIndex(prevIndex => 
+      prevIndex - imagesPerView < 0 
+        ? Math.max(0, screenshots.length - imagesPerView) 
+        : prevIndex - imagesPerView
+    );
+  };
+
+  // Get visible screenshots
+  const getVisibleScreenshots = () => {
+    return screenshots.slice(
+      currentImageIndex, 
+      Math.min(currentImageIndex + imagesPerView, screenshots.length)
+    );
+  };
+
+  // Handle volume change
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (videoRef.current) {
+      videoRef.current.volume = newVolume;
+    }
+  };
+
+  // Handle resolution change
+  const handleResolutionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCurrentResolution(e.target.value);
+    // In a real implementation, you would change the video source based on resolution
+    // For this example, we'll just log the change
+    console.log(`Resolution changed to: ${e.target.value}`);
+  };
+
+  // Set initial volume when video loads
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.volume = volume;
+    }
+  }, [volume]);
 
   const openImageModal = (imageSrc: string) => {
     setSelectedImage(imageSrc);
+    // Find the index of the clicked image in allImages
+    const index = allImages.findIndex(img => img.src === imageSrc);
+    if (index !== -1) {
+      setModalImageIndex(index);
+    }
   };
 
   const closeImageModal = () => {
     setSelectedImage(null);
+  };
+
+  // Navigate to next image in modal
+  const nextModalImage = () => {
+    setModalImageIndex(prevIndex => (prevIndex + 1) % allImages.length);
+    setSelectedImage(allImages[(modalImageIndex + 1) % allImages.length].src);
+  };
+
+  // Navigate to previous image in modal
+  const prevModalImage = () => {
+    setModalImageIndex(prevIndex => 
+      prevIndex === 0 ? allImages.length - 1 : prevIndex - 1
+    );
+    setSelectedImage(allImages[
+      modalImageIndex === 0 ? allImages.length - 1 : modalImageIndex - 1
+    ].src);
   };
 
   return (
@@ -158,6 +265,7 @@ function App() {
                 <div className="gameplay-media">
                   <div className="gameplay-video">
                     <video 
+                      ref={videoRef}
                       src="/src/assets/images/DOOM The Dark Ages   Official Trailer 1 (4K)   Coming 2025.mp4" 
                       controls 
                       poster="/images/doom-gameplay.jpg"
@@ -167,35 +275,80 @@ function App() {
                     >
                       Tarayıcınız video etiketini desteklemiyor.
                     </video>
+                    
+                    <div className="video-controls-custom">
+                      <div className="video-control-group">
+                        <label htmlFor="volume-control">Ses:</label>
+                        <input 
+                          type="range" 
+                          id="volume-control" 
+                          min="0" 
+                          max="1" 
+                          step="0.01" 
+                          value={volume} 
+                          onChange={handleVolumeChange}
+                          className="volume-slider"
+                        />
+                        <span className="volume-value">{Math.round(volume * 100)}%</span>
+                      </div>
+                      
+                      <div className="video-control-group">
+                        <label htmlFor="resolution-control">Çözünürlük:</label>
+                        <select 
+                          id="resolution-control" 
+                          value={currentResolution} 
+                          onChange={handleResolutionChange}
+                          className="resolution-select"
+                        >
+                          {resolutions.map((res) => (
+                            <option key={res.value} value={res.value}>
+                              {res.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
                   </div>
                   
                   <div className="screenshots">
                     <h3>Ekran Görüntüleri</h3>
-                    <div className="screenshot-grid">
-                      <img 
-                        src="/src/assets/images/ekran ss/1.webp" 
-                        alt="Screenshot 1" 
-                        onClick={() => openImageModal("/src/assets/images/ekran ss/1.webp")}
-                        style={{ cursor: 'pointer' }}
-                      />
-                      <img 
-                        src="/src/assets/images/ekran ss/2.webp" 
-                        alt="Screenshot 2" 
-                        onClick={() => openImageModal("/src/assets/images/ekran ss/2.webp")}
-                        style={{ cursor: 'pointer' }}
-                      />
-                      <img 
-                        src="/src/assets/images/ekran ss/3.webp" 
-                        alt="Screenshot 3" 
-                        onClick={() => openImageModal("/src/assets/images/ekran ss/3.webp")}
-                        style={{ cursor: 'pointer' }}
-                      />
-                      <img 
-                        src="/src/assets/images/ekran ss/4.webp" 
-                        alt="Screenshot 4" 
-                        onClick={() => openImageModal("/src/assets/images/ekran ss/4.webp")}
-                        style={{ cursor: 'pointer' }}
-                      />
+                    <div className="screenshot-navigation">
+                      <button 
+                        className="nav-btn prev-btn" 
+                        onClick={handlePrevImages}
+                        aria-label="Önceki görüntüler"
+                      >
+                        &lt;
+                      </button>
+                      
+                      <div className="screenshot-grid">
+                        {getVisibleScreenshots().map((screenshot, index) => (
+                          <img 
+                            key={index}
+                            src={screenshot.src} 
+                            alt={screenshot.alt} 
+                            onClick={() => openImageModal(screenshot.src)}
+                            style={{ cursor: 'pointer' }}
+                          />
+                        ))}
+                      </div>
+                      
+                      <button 
+                        className="nav-btn next-btn" 
+                        onClick={handleNextImages}
+                        aria-label="Sonraki görüntüler"
+                      >
+                        &gt;
+                      </button>
+                    </div>
+                    <div className="screenshot-indicators">
+                      {screenshots.map((_, index) => (
+                        <span 
+                          key={index}
+                          className={`indicator ${index >= currentImageIndex && index < currentImageIndex + imagesPerView ? 'active' : ''}`}
+                          onClick={() => setCurrentImageIndex(index)}
+                        />
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -459,28 +612,39 @@ function App() {
           alignItems: 'center',
           zIndex: 1000
         }}>
+          <button 
+            className="modal-nav-btn prev-modal-btn"
+            onClick={prevModalImage}
+            aria-label="Önceki görüntü"
+          >
+            &lt;
+          </button>
+          
           <div className="modal-content" style={{ position: 'relative', maxWidth: '90%', maxHeight: '90%' }}>
             <img 
               src={selectedImage} 
-              alt="Enlarged view" 
+              alt={`Enlarged view ${modalImageIndex + 1}/${allImages.length}`} 
               style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain' }}
             />
+            <div className="modal-counter">
+              {modalImageIndex + 1} / {allImages.length}
+            </div>
             <button 
               onClick={closeImageModal}
-              style={{
-                position: 'absolute',
-                top: '-40px',
-                right: '0',
-                background: 'none',
-                border: 'none',
-                color: 'white',
-                fontSize: '24px',
-                cursor: 'pointer'
-              }}
+              className="modal-close-btn"
+              aria-label="Kapat"
             >
               X
             </button>
           </div>
+          
+          <button 
+            className="modal-nav-btn next-modal-btn"
+            onClick={nextModalImage}
+            aria-label="Sonraki görüntü"
+          >
+            &gt;
+          </button>
         </div>
       )}
     </div>
