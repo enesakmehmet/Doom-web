@@ -6,7 +6,6 @@ function App() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [volume, setVolume] = useState(0.5); // Default volume at 50%
   const [currentResolution, setCurrentResolution] = useState('720p'); // Default resolution
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // Track current image index
   const [modalImageIndex, setModalImageIndex] = useState(0); // Track current modal image index
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0); // Track current video index
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -52,33 +51,9 @@ function App() {
   // Screenshots data (subset of allImages)
   const screenshots = allImages.filter(img => img.category === "screenshots");
 
-  // Number of images to show at once
-  const imagesPerView = 2;
-
-  // Handle next images
-  const handleNextImages = () => {
-    setCurrentImageIndex(prevIndex => 
-      prevIndex + imagesPerView >= screenshots.length 
-        ? 0 
-        : prevIndex + imagesPerView
-    );
-  };
-
-  // Handle previous images
-  const handlePrevImages = () => {
-    setCurrentImageIndex(prevIndex => 
-      prevIndex - imagesPerView < 0 
-        ? Math.max(0, screenshots.length - imagesPerView) 
-        : prevIndex - imagesPerView
-    );
-  };
-
   // Get visible screenshots
   const getVisibleScreenshots = () => {
-    return screenshots.slice(
-      currentImageIndex, 
-      Math.min(currentImageIndex + imagesPerView, screenshots.length)
-    );
+    return screenshots;
   };
 
   // Handle volume change
@@ -395,15 +370,7 @@ function App() {
                   
                   <div className="screenshots">
                     <h3>Ekran Görüntüleri</h3>
-                    <div className="screenshot-navigation">
-                      <button 
-                        className="nav-btn prev-btn" 
-                        onClick={handlePrevImages}
-                        aria-label="Önceki görüntüler"
-                      >
-                        &lt;
-                      </button>
-                      
+                    <div className="screenshot-container">
                       <div className="screenshot-grid">
                         {getVisibleScreenshots().map((screenshot, index) => (
                           <img 
@@ -411,27 +378,10 @@ function App() {
                             src={screenshot.src} 
                             alt={screenshot.alt} 
                             onClick={() => openImageModal(screenshot.src)}
-                            style={{ cursor: 'pointer' }}
+                            className="screenshot-img"
                           />
                         ))}
                       </div>
-                      
-                      <button 
-                        className="nav-btn next-btn" 
-                        onClick={handleNextImages}
-                        aria-label="Sonraki görüntüler"
-                      >
-                        &gt;
-                      </button>
-                    </div>
-                    <div className="screenshot-indicators">
-                      {screenshots.map((_, index) => (
-                        <span 
-                          key={index}
-                          className={`indicator ${index >= currentImageIndex && index < currentImageIndex + imagesPerView ? 'active' : ''}`}
-                          onClick={() => setCurrentImageIndex(index)}
-                        />
-                      ))}
                     </div>
                   </div>
                 </div>
