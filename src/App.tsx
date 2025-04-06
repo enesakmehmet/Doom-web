@@ -348,6 +348,504 @@ function App() {
                 </div>
               </div>
             )}
+
+            {activeTab === 'features' && (
+              <div className="features-content fade-in">
+                <h2 className="section-title">Özellikler</h2>
+                <div className="features-grid">
+                  <div className="feature-card">
+                    <img src="/src/assets/images/DOOM Eternal ana özellikleri/1.webp" alt="Geliştirilmiş Dövüş Sistemi" />
+                    <h3>Geliştirilmiş Dövüş Sistemi</h3>
+                    <p>Yeni silahlar, yetenekler ve düşman zayıf noktalarını kullanan stratejik dövüş sistemi ile Slayer'ın gücünü keşfedin.</p>
+                  </div>
+                  <div className="feature-card">
+                    <img src="/src/assets/images/DOOM Eternal ana özellikleri/2.webp" alt="Yeni Düşmanlar" />
+                    <h3>Yeni Düşmanlar</h3>
+                    <p>Cehennemin yeni ve klasik iblis ordusuyla yüzleşin. Her biri kendi özel yetenekleri ve zayıf noktalarına sahip.</p>
+                  </div>
+                  <div className="feature-card">
+                    <img src="/src/assets/images/DOOM Eternal ana özellikleri/3.webp" alt="Çok Boyutlu Dünyalar" />
+                    <h3>Çok Boyutlu Dünyalar</h3>
+                    <p>Yıkılmış dünyalardan antik tapınaklara, boyutlar arası yolculuğunuzda birbirinden farklı ortamlarda savaşın.</p>
+                  </div>
+                  <div className="feature-card">
+                    <img src="/src/assets/images/hard mode/1.webp" alt="Hardcore Mod" />
+                    <h3>Horde Modu</h3>
+                    <p>Kendini tekrar tekrar cehennem dalgalarına karşı test et ve en yüksek skoru elde etmek için savaş.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'videos' && (
+              <div className="videos-content fade-in">
+                <h2 className="section-title">Videolar</h2>
+                <div className="video-gallery">
+                  <div className="main-video">
+                    <video 
+                      ref={secondVideoRef}
+                      controls 
+                      className="featured-video"
+                    >
+                      <source src={videos[currentVideoIndex].src} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                    <h3>{videos[currentVideoIndex].title}</h3>
+                  </div>
+                  
+                  <div className="video-thumbnails">
+                    {videos.map((video, index) => (
+                      <div 
+                        key={index} 
+                        className={`video-thumbnail ${index === currentVideoIndex ? 'active' : ''}`}
+                        onClick={() => setCurrentVideoIndex(index)}
+                      >
+                        <div className="thumbnail-overlay">
+                          <span className="play-icon">▶</span>
+                        </div>
+                        <div className="thumbnail-title">{video.title}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="video-controls-panel">
+                  <div className="resolution-selector">
+                    <label htmlFor="resolution">Çözünürlük:</label>
+                    <select 
+                      id="resolution" 
+                      value={currentResolution}
+                      onChange={handleResolutionChange}
+                    >
+                      {resolutions.map((res) => (
+                        <option key={res.value} value={res.value}>
+                          {res.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div className="volume-control">
+                    <label htmlFor="volume">Ses:</label>
+                    <input 
+                      type="range" 
+                      id="volume" 
+                      min="0" 
+                      max="1" 
+                      step="0.01" 
+                      value={volume}
+                      onChange={handleVolumeChange}
+                    />
+                    <span>{Math.round(volume * 100)}%</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'dlc' && (
+              <div className="dlc-content fade-in">
+                <h2 className="section-title">DLC Paketleri</h2>
+                <div className="dlc-grid">
+                  <div className="dlc-card">
+                    <div className="dlc-image">
+                      <img src="/src/assets/images/hard mode/2.webp" alt="The Ancient Gods - Part 1" />
+                      <div className="dlc-badge">Çıktı</div>
+                    </div>
+                    <div className="dlc-info">
+                      <h3>The Ancient Gods - Part 1</h3>
+                      <p>DOOM Slayer'ın yolculuğu devam ediyor. Cehennem'in ordularını yendikten sonra yeni bir mücadele başlar.</p>
+                      <div className="dlc-price">299 TL</div>
+                      <button className="dlc-buy-btn">Satın Al</button>
+                    </div>
+                  </div>
+                  
+                  <div className="dlc-card">
+                    <div className="dlc-image">
+                      <img src="/src/assets/images/hard mode/3.webp" alt="The Ancient Gods - Part 2" />
+                      <div className="dlc-badge">Çıktı</div>
+                    </div>
+                    <div className="dlc-info">
+                      <h3>The Ancient Gods - Part 2</h3>
+                      <p>Destansı hikayenin son bölümü. İnsanlık ve evrenin kaderi için son savaşı ver.</p>
+                      <div className="dlc-price">299 TL</div>
+                      <button className="dlc-buy-btn">Satın Al</button>
+                    </div>
+                  </div>
+                  
+                  <div className="dlc-card">
+                    <div className="dlc-image">
+                      <img src="/src/assets/images/hard mode/4.webp" alt="Cosmetic Pack" />
+                      <div className="dlc-badge">Çıktı</div>
+                    </div>
+                    <div className="dlc-info">
+                      <h3>Kozmetik Paketi</h3>
+                      <p>Yeni zırhlar, silah görünümleri ve oyuncu simgeleri ile DOOM Slayer'ını özelleştir.</p>
+                      <div className="dlc-price">149 TL</div>
+                      <button className="dlc-buy-btn">Satın Al</button>
+                    </div>
+                  </div>
+                  
+                  <div className="dlc-card coming-soon">
+                    <div className="dlc-image">
+                      <img src="/src/assets/images/ekran ss/4.webp" alt="New DLC Coming Soon" />
+                      <div className="dlc-badge">Yakında</div>
+                    </div>
+                    <div className="dlc-info">
+                      <h3>Yeni İçerik Paketi</h3>
+                      <p>Yakında gelecek yeni içerik paketi ile DOOM evreninde yeni maceralar yaşa.</p>
+                      <div className="dlc-price">TBA</div>
+                      <button className="dlc-buy-btn" disabled>Ön Sipariş</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'reviews' && (
+              <div className="reviews-content fade-in">
+                <h2 className="section-title">İncelemeler</h2>
+                
+                {/* Eleştirmen Puanları */}
+                <div className="critics-container">
+                  <div className="critic-score-card main-score">
+                    <div className="score-circle-large">
+                      <span className="score-number">9.2</span>
+                      <span className="score-max">/10</span>
+                    </div>
+                    <div className="main-score-details">
+                      <h3>Mükemmel</h3>
+                      <p>90+ eleştirmen değerlendirmesi</p>
+                      <div className="score-bar-container">
+                        <div className="score-bar-label">Oynanış</div>
+                        <div className="score-bar-background">
+                          <div className="score-bar-fill" style={{width: '95%'}}></div>
+                        </div>
+                      </div>
+                      <div className="score-bar-container">
+                        <div className="score-bar-label">Grafik</div>
+                        <div className="score-bar-background">
+                          <div className="score-bar-fill" style={{width: '90%'}}></div>
+                        </div>
+                      </div>
+                      <div className="score-bar-container">
+                        <div className="score-bar-label">Ses</div>
+                        <div className="score-bar-background">
+                          <div className="score-bar-fill" style={{width: '98%'}}></div>
+                        </div>
+                      </div>
+                      <div className="score-bar-container">
+                        <div className="score-bar-label">Hikaye</div>
+                        <div className="score-bar-background">
+                          <div className="score-bar-fill" style={{width: '85%'}}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="critic-scores-grid">
+                    <div className="critic-score-card">
+                      <div className="critic-logo">
+                        <img src="/src/assets/images/hard mode/4.webp" alt="IGN Logo" />
+                      </div>
+                      <div className="critic-score">
+                        <span>9.5</span>
+                        <span className="critic-score-max">/10</span>
+                      </div>
+                      <div className="critic-quote">"DOOM Eternal, FPS dünyasının yeni standardı."</div>
+                    </div>
+                    
+                    <div className="critic-score-card">
+                      <div className="critic-logo">
+                        <img src="/src/assets/images/hard mode/3.webp" alt="GameSpot Logo" />
+                      </div>
+                      <div className="critic-score">
+                        <span>9.0</span>
+                        <span className="critic-score-max">/10</span>
+                      </div>
+                      <div className="critic-quote">"Heyecan verici aksiyon ve derinlikli oynanış."</div>
+                    </div>
+                    
+                    <div className="critic-score-card">
+                      <div className="critic-logo">
+                        <img src="/src/assets/images/hard mode/2.webp" alt="PC Gamer Logo" />
+                      </div>
+                      <div className="critic-score">
+                        <span>9.4</span>
+                        <span className="critic-score-max">/10</span>
+                      </div>
+                      <div className="critic-quote">"Bu yılın en iyi FPS deneyimi."</div>
+                    </div>
+                    
+                    <div className="critic-score-card">
+                      <div className="critic-logo">
+                        <img src="/src/assets/images/hard mode/1.webp" alt="Destructoid Logo" />
+                      </div>
+                      <div className="critic-score">
+                        <span>9.0</span>
+                        <span className="critic-score-max">/10</span>
+                      </div>
+                      <div className="critic-quote">"Cehennemle yüzleşmek hiç bu kadar eğlenceli olmamıştı."</div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Ödüller Vitrini */}
+                <div className="awards-showcase">
+                  <h3 className="awards-title">Ödüller ve Takdir</h3>
+                  <div className="awards-container">
+                    <div className="award-item">
+                      <div className="award-badge">
+                        <span className="award-icon">🏆</span>
+                      </div>
+                      <div className="award-details">
+                        <h4>2020 Yılın Oyunu Adayı</h4>
+                        <p>The Game Awards</p>
+                      </div>
+                    </div>
+                    
+                    <div className="award-item">
+                      <div className="award-badge">
+                        <span className="award-icon">🎮</span>
+                      </div>
+                      <div className="award-details">
+                        <h4>En İyi Aksiyon Oyunu</h4>
+                        <p>Golden Joystick Awards</p>
+                      </div>
+                    </div>
+                    
+                    <div className="award-item">
+                      <div className="award-badge">
+                        <span className="award-icon">🔊</span>
+                      </div>
+                      <div className="award-details">
+                        <h4>En İyi Ses Tasarımı</h4>
+                        <p>DICE Awards</p>
+                      </div>
+                    </div>
+                    
+                    <div className="award-item">
+                      <div className="award-badge">
+                        <span className="award-icon">🔥</span>
+                      </div>
+                      <div className="award-details">
+                        <h4>En İyi Oyun Direktörü</h4>
+                        <p>BAFTA Game Awards</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Kullanıcı İncelemeleri */}
+                <div className="user-reviews-section">
+                  <div className="user-reviews-header">
+                    <h3>Kullanıcı İncelemeleri</h3>
+                    <div className="user-rating-summary">
+                      <div className="user-rating-overall">
+                        <span className="user-rating-number">4.8</span>
+                        <div className="user-rating-stars">★★★★★</div>
+                        <span className="user-rating-count">10.845 İnceleme</span>
+                      </div>
+                      
+                      <div className="user-rating-distribution">
+                        <div className="rating-bar">
+                          <span className="rating-label">5 ★</span>
+                          <div className="rating-bar-bg">
+                            <div className="rating-bar-fill" style={{width: '85%'}}></div>
+                          </div>
+                          <span className="rating-percent">85%</span>
+                        </div>
+                        
+                        <div className="rating-bar">
+                          <span className="rating-label">4 ★</span>
+                          <div className="rating-bar-bg">
+                            <div className="rating-bar-fill" style={{width: '10%'}}></div>
+                          </div>
+                          <span className="rating-percent">10%</span>
+                        </div>
+                        
+                        <div className="rating-bar">
+                          <span className="rating-label">3 ★</span>
+                          <div className="rating-bar-bg">
+                            <div className="rating-bar-fill" style={{width: '3%'}}></div>
+                          </div>
+                          <span className="rating-percent">3%</span>
+                        </div>
+                        
+                        <div className="rating-bar">
+                          <span className="rating-label">2 ★</span>
+                          <div className="rating-bar-bg">
+                            <div className="rating-bar-fill" style={{width: '1%'}}></div>
+                          </div>
+                          <span className="rating-percent">1%</span>
+                        </div>
+                        
+                        <div className="rating-bar">
+                          <span className="rating-label">1 ★</span>
+                          <div className="rating-bar-bg">
+                            <div className="rating-bar-fill" style={{width: '1%'}}></div>
+                          </div>
+                          <span className="rating-percent">1%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="filter-sort-options">
+                    <div className="review-sort">
+                      <label>Sırala:</label>
+                      <select className="sort-select">
+                        <option value="recent">En Yeni</option>
+                        <option value="helpful">En Yararlı</option>
+                        <option value="high">En Yüksek Puan</option>
+                        <option value="low">En Düşük Puan</option>
+                      </select>
+                    </div>
+                    
+                    <div className="review-filter">
+                      <label>Filtrele:</label>
+                      <div className="filter-buttons">
+                        <button className="filter-btn active">Tümü</button>
+                        <button className="filter-btn">PC</button>
+                        <button className="filter-btn">PS5</button>
+                        <button className="filter-btn">Xbox</button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="user-reviews-list">
+                    <div className="review-card featured">
+                      <div className="review-header">
+                        <div className="reviewer-info">
+                          <div className="reviewer-avatar">JS</div>
+                          <div className="reviewer-details">
+                            <div className="reviewer-name">JohnSlayer92</div>
+                            <div className="review-details">
+                              <span className="review-platform">PC</span>
+                              <span className="review-date">12 Nisan 2023</span>
+                              <span className="review-playtime">120+ saat</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="review-rating">★★★★★</div>
+                      </div>
+                      
+                      <div className="review-body">
+                        <h4 className="review-title">Şimdiye Kadar Oynadığım En İyi DOOM Oyunu</h4>
+                        <div className="review-text">
+                          <p>Silah mekanikleri muhteşem, düşmanlar zorlayıcı ve müzik... Ah o müzik! Mick Gordon yine harikalar yaratmış. Cehennem ordularını parçalamak hiç bu kadar zevkli olmamıştı. Glory kill sistemi ve platforming elementleri oyuna ekstra bir derinlik katıyor.</p>
+                        </div>
+                        <div className="review-pros-cons">
+                          <div className="review-pros">
+                            <h5>Artılar</h5>
+                            <ul>
+                              <li>Akıcı ve hızlı oynanış</li>
+                              <li>Etkileyici müzikler</li>
+                              <li>Çeşitli silahlar ve yükseltmeler</li>
+                            </ul>
+                          </div>
+                          <div className="review-cons">
+                            <h5>Eksiler</h5>
+                            <ul>
+                              <li>Bazen çok zorlayıcı olabiliyor</li>
+                              <li>Kısa hikaye</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="review-footer">
+                        <div className="review-helpful">
+                          <span>Bu inceleme yardımcı oldu mu?</span>
+                          <button className="helpful-btn">
+                            <span className="thumb-icon">👍</span> Evet (243)
+                          </button>
+                          <button className="helpful-btn">
+                            <span className="thumb-icon">👎</span> Hayır (18)
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="review-card">
+                      <div className="review-header">
+                        <div className="reviewer-info">
+                          <div className="reviewer-avatar">DG</div>
+                          <div className="reviewer-details">
+                            <div className="reviewer-name">DoomGirl</div>
+                            <div className="review-details">
+                              <span className="review-platform">PS5</span>
+                              <span className="review-date">3 Mart 2023</span>
+                              <span className="review-playtime">80+ saat</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="review-rating">★★★★☆</div>
+                      </div>
+                      
+                      <div className="review-body">
+                        <h4 className="review-title">Zorlayıcı Ama Ödüllendirici</h4>
+                        <div className="review-text">
+                          <p>Harika bir oyun ama zorluk seviyesi bazen sinir bozucu olabiliyor. Yine de atmosfer, grafikler ve aksiyon muhteşem. Kesinlikle tavsiye ederim. PS5'in DualSense özellikleri oyuna ekstra bir boyut katıyor.</p>
+                        </div>
+                      </div>
+                      
+                      <div className="review-footer">
+                        <div className="review-helpful">
+                          <span>Bu inceleme yardımcı oldu mu?</span>
+                          <button className="helpful-btn">
+                            <span className="thumb-icon">👍</span> Evet (156)
+                          </button>
+                          <button className="helpful-btn">
+                            <span className="thumb-icon">👎</span> Hayır (12)
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="review-card">
+                      <div className="review-header">
+                        <div className="reviewer-info">
+                          <div className="reviewer-avatar">MK</div>
+                          <div className="reviewer-details">
+                            <div className="reviewer-name">MetalKing</div>
+                            <div className="review-details">
+                              <span className="review-platform">Xbox</span>
+                              <span className="review-date">17 Şubat 2023</span>
+                              <span className="review-playtime">100+ saat</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="review-rating">★★★★★</div>
+                      </div>
+                      
+                      <div className="review-body">
+                        <h4 className="review-title">Adrenalin Dolu Bir Macera</h4>
+                        <div className="review-text">
+                          <p>Bu oyun tamamen adrenalin! Her seviye bir öncekinden daha heyecanlı. DLC'ler de ana oyun kadar kaliteli. 100 saat oynadım ve hâlâ sıkılmadım. Multiplayer modu da son güncellemelerle çok daha iyi hale geldi.</p>
+                        </div>
+                      </div>
+                      
+                      <div className="review-footer">
+                        <div className="review-helpful">
+                          <span>Bu inceleme yardımcı oldu mu?</span>
+                          <button className="helpful-btn">
+                            <span className="thumb-icon">👍</span> Evet (89)
+                          </button>
+                          <button className="helpful-btn">
+                            <span className="thumb-icon">👎</span> Hayır (7)
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="reviews-actions">
+                    <button className="load-more-btn">Daha Fazla İnceleme Yükle</button>
+                    <button className="write-review-btn">İnceleme Yaz</button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
