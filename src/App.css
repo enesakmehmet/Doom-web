@@ -2868,3 +2868,139 @@ img {
     width: 60%;
   }
 }
+
+/* Feature Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.feature-modal {
+  background: rgba(20, 20, 20, 0.95);
+  border: 2px solid var(--doom-orange);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 900px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.feature-modal-inner {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.feature-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 69, 0, 0.3);
+}
+
+.feature-modal-header h2 {
+  margin: 0;
+  color: var(--doom-orange);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.feature-modal-body {
+  padding: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-modal-image {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.feature-modal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.feature-modal-image:hover img {
+  transform: scale(1.05);
+}
+
+.feature-modal-info {
+  padding: 1.5rem;
+}
+
+.feature-modal-description p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.5rem;
+}
+
+.feature-modal-details h3 {
+  font-size: 1.3rem;
+  color: var(--doom-orange);
+  margin: 0 0 1rem 0;
+}
+
+.feature-modal-details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feature-modal-details li {
+  margin-bottom: 0.8rem;
+  padding-left: 1.5rem;
+  position: relative;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.feature-modal-details li::before {
+  content: "▶";
+  color: var(--doom-orange);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 0.8rem;
+}
+
+.feature-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  border-top: 1px solid rgba(255, 69, 0, 0.3);
+}
+
+.feature-modal-back {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.feature-modal-back:hover {
+  background-color: #444;
+}

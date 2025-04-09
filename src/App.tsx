@@ -217,6 +217,75 @@ function App() {
     setSelectedDlc(null);
   };
 
+  // Yeni özellikler verisi ekliyorum
+  const featureDetails = [
+    {
+      id: 1,
+      title: "Geliştirilmiş Dövüş Sistemi",
+      image: "/src/assets/images/DOOM Eternal ana özellikleri/1.webp",
+      shortDescription: "Yeni silahlar, yetenekler ve düşman zayıf noktalarını kullanan stratejik dövüş sistemi ile Slayer'ın gücünü keşfedin.",
+      longDescription: "DOOM Eternal'ın geliştirilmiş dövüş sistemi, oyuncuların cehennem ordularına karşı daha stratejik ve heyecan verici bir şekilde savaşmasına olanak tanır. Yeni silahlar, modifikasyonlar ve yetenekler eklenmiştir. Glory Kill sistemi genişletilmiş olup, düşman zayıf noktalarına göre özel infaz animasyonları içerir.",
+      features: [
+        "Yükseltilmiş silah modifikasyonları",
+        "Geliştirilmiş Glory Kill sistemi",
+        "Yeni hareket mekanikleri",
+        "Zırh, sağlık ve cephane toplama stratejileri"
+      ]
+    },
+    {
+      id: 2,
+      title: "Yeni Düşmanlar",
+      image: "/src/assets/images/DOOM Eternal ana özellikleri/2.webp",
+      shortDescription: "Cehennemin yeni ve klasik iblis ordusuyla yüzleşin. Her biri kendi özel yetenekleri ve zayıf noktalarına sahip.",
+      longDescription: "DOOM Eternal'da karşılaşacağınız iblis ordusu, hem klasik DOOM düşmanlarını hem de tamamen yeni yaratıkları içerir. Her düşman türü, kendine özgü saldırı kalıpları ve zayıflıklarıyla oynanışta stratejik derinlik sağlar. Marauder, Doom Hunter ve Gladyator gibi yeni boss düşmanlar zorlu bir mücadele sunar.",
+      features: [
+        "12+ yeni düşman türü",
+        "Gelişmiş düşman yapay zekası",
+        "Çeşitli zayıf noktalar ve stratejiler",
+        "Epik boss savaşları"
+      ]
+    },
+    {
+      id: 3,
+      title: "Çok Boyutlu Dünyalar",
+      image: "/src/assets/images/DOOM Eternal ana özellikleri/3.webp",
+      shortDescription: "Yıkılmış dünyalardan antik tapınaklara, boyutlar arası yolculuğunuzda birbirinden farklı ortamlarda savaşın.",
+      longDescription: "DOOM Eternal oyuncuları cehennemin derinliklerinden, işgal edilmiş Dünya şehirlerine ve kadim Sentinel dünyasına kadar çeşitli lokasyonlara götürür. Her bölüm benzersiz görsel stilini ve çevre tasarımını sergiler, platform bulmacaları ve gizli alanlarla keşif yapmayı teşvik eder.",
+      features: [
+        "8+ benzersiz gezegen ve boyut",
+        "Detaylı çevre tasarımları",
+        "Hikaye odaklı keşif",
+        "Gizli bölgeler ve koleksiyonlar"
+      ]
+    },
+    {
+      id: 4,
+      title: "Horde Modu",
+      image: "/src/assets/images/hard mode/1.webp",
+      shortDescription: "Kendini tekrar tekrar cehennem dalgalarına karşı test et ve en yüksek skoru elde etmek için savaş.",
+      longDescription: "Horde Modu, oyuncuların sonsuz cehennem dalgalarına karşı hayatta kalma becerilerini test etmelerini sağlar. Her dalga giderek zorlaşır ve oyuncular çeşitli ödüller ve güçlendirmeler kazanabilir. Çeşitli arenalar ve zorluk seviyeleri ile yüksek tekrar oynanabilirlik sunar.",
+      features: [
+        "Sonsuz düşman dalgaları",
+        "Yüksek skor tabloları",
+        "Özel güçlendirmeler ve ödüller",
+        "Çoklu arena seçeneği"
+      ]
+    }
+  ];
+
+  // Seçili özellik için state
+  const [selectedFeature, setSelectedFeature] = useState<number | null>(null);
+
+  // Open Feature details modal
+  const openFeatureModal = (id: number) => {
+    setSelectedFeature(id);
+  };
+
+  // Close Feature details modal
+  const closeFeatureModal = () => {
+    setSelectedFeature(null);
+  };
+
   return (
     <div className="doom-app">
       <div className="overlay"></div>
@@ -447,26 +516,13 @@ function App() {
               <div className="features-content fade-in">
                 <h2 className="section-title">Özellikler</h2>
                 <div className="features-grid">
-                  <div className="feature-card">
-                    <img src="/src/assets/images/DOOM Eternal ana özellikleri/1.webp" alt="Geliştirilmiş Dövüş Sistemi" />
-                    <h3>Geliştirilmiş Dövüş Sistemi</h3>
-                    <p>Yeni silahlar, yetenekler ve düşman zayıf noktalarını kullanan stratejik dövüş sistemi ile Slayer'ın gücünü keşfedin.</p>
-                  </div>
-                  <div className="feature-card">
-                    <img src="/src/assets/images/DOOM Eternal ana özellikleri/2.webp" alt="Yeni Düşmanlar" />
-                    <h3>Yeni Düşmanlar</h3>
-                    <p>Cehennemin yeni ve klasik iblis ordusuyla yüzleşin. Her biri kendi özel yetenekleri ve zayıf noktalarına sahip.</p>
-                  </div>
-                  <div className="feature-card">
-                    <img src="/src/assets/images/DOOM Eternal ana özellikleri/3.webp" alt="Çok Boyutlu Dünyalar" />
-                    <h3>Çok Boyutlu Dünyalar</h3>
-                    <p>Yıkılmış dünyalardan antik tapınaklara, boyutlar arası yolculuğunuzda birbirinden farklı ortamlarda savaşın.</p>
-                  </div>
-                  <div className="feature-card">
-                    <img src="/src/assets/images/hard mode/1.webp" alt="Hardcore Mod" />
-                    <h3>Horde Modu</h3>
-                    <p>Kendini tekrar tekrar cehennem dalgalarına karşı test et ve en yüksek skoru elde etmek için savaş.</p>
-                  </div>
+                  {featureDetails.map((feature) => (
+                    <div className="feature-card" key={feature.id} onClick={() => openFeatureModal(feature.id)}>
+                      <img src={feature.image} alt={feature.title} />
+                      <h3>{feature.title}</h3>
+                      <p>{feature.shortDescription}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -1045,6 +1101,43 @@ function App() {
                       {dlc.badge === 'Yakında' ? 'Ön Sipariş' : 'Satın Al'}
                     </button>
                     <button className="dlc-modal-back" onClick={closeDlcModal}>Geri Dön</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Feature Modal */}
+        {selectedFeature !== null && (
+          <div className="modal-overlay" onClick={closeFeatureModal}>
+            <div className="feature-modal" onClick={(e) => e.stopPropagation()}>
+              {featureDetails.filter(feature => feature.id === selectedFeature).map((feature) => (
+                <div key={feature.id} className="feature-modal-inner">
+                  <div className="feature-modal-header">
+                    <h2>{feature.title}</h2>
+                    <button className="modal-close-btn" onClick={closeFeatureModal}>×</button>
+                  </div>
+                  <div className="feature-modal-body">
+                    <div className="feature-modal-image">
+                      <img src={feature.image} alt={feature.title} />
+                    </div>
+                    <div className="feature-modal-info">
+                      <div className="feature-modal-description">
+                        <p>{feature.longDescription}</p>
+                      </div>
+                      <div className="feature-modal-details">
+                        <h3>Özellikler</h3>
+                        <ul>
+                          {feature.features.map((item, index) => (
+                            <li key={index}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="feature-modal-footer">
+                    <button className="feature-modal-back" onClick={closeFeatureModal}>Kapat</button>
                   </div>
                 </div>
               ))}
