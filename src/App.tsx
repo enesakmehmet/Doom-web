@@ -4,6 +4,7 @@ import './App.css'
 function App() {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedDlc, setSelectedDlc] = useState<number | null>(null);
   const [volume, setVolume] = useState(0.5);
   const [currentResolution, setCurrentResolution] = useState('720p');
   const [modalImageIndex, setModalImageIndex] = useState(0);
@@ -84,6 +85,20 @@ function App() {
     }
   }, [volume]);
 
+  // Update video source when currentVideoIndex changes
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.src = videos[currentVideoIndex].src;
+      videoRef.current.load();
+      videoRef.current.play().catch(e => console.log("Video play error:", e));
+    }
+    if (secondVideoRef.current) {
+      secondVideoRef.current.src = videos[currentVideoIndex].src;
+      secondVideoRef.current.load();
+      secondVideoRef.current.play().catch(e => console.log("Video play error:", e));
+    }
+  }, [currentVideoIndex, videos]);
+
   const openImageModal = (imageSrc: string) => {
     setSelectedImage(imageSrc);
     const index = allImages.findIndex(img => img.src === imageSrc);
@@ -122,6 +137,84 @@ function App() {
     setCurrentVideoIndex(prevIndex =>
       prevIndex === 0 ? videos.length - 1 : prevIndex - 1
     );
+  };
+
+  // DLC data
+  const dlcPackages = [
+    {
+      id: 1,
+      title: "The Ancient Gods - Part 1",
+      description: "DOOM Slayer'ın yolculuğu devam ediyor. Cehennem'in ordularını yendikten sonra yeni bir mücadele başlar.",
+      image: "/src/assets/images/hard mode/2.webp",
+      price: "299 TL",
+      badge: "Çıktı",
+      longDescription: "The Ancient Gods - Part 1, DOOM Eternal'ın ilk büyük hikaye genişletmesi olarak Slayer'ın maceralarına devam ediyor. Cehennemin Dünya'yı işgal etmesine son verdikten sonra, daha büyük bir tehdit ortaya çıkar. Yeni bölgeler keşfedilmeyi bekliyor, yeni silahlar ve yetenekler onları bekliyor ve daha tehlikeli düşmanlar ile yüzleşmek zorunda kalacak.",
+      features: [
+        "3 Yeni Bölge",
+        "Yeni Silahlar ve Yetenekler",
+        "Zorlayıcı Yeni Düşmanlar",
+        "Genişletilmiş Hikaye"
+      ],
+      releaseDate: "20 Ekim 2020"
+    },
+    {
+      id: 2,
+      title: "The Ancient Gods - Part 2",
+      description: "Destansı hikayenin son bölümü. İnsanlık ve evrenin kaderi için son savaşı ver.",
+      image: "/src/assets/images/hard mode/3.webp",
+      price: "299 TL",
+      badge: "Çıktı",
+      longDescription: "The Ancient Gods - Part 2, DOOM Eternal'ın destansı hikayesini muhteşem bir finalle sonlandırıyor. Slayer, insanlığın ve tüm boyutların kaderini belirleyecek nihai savaşa giriyor. Yeni bölgeler, daha güçlü silahlar ve daha zorlu düşmanlar bu genişletmede sizi bekliyor.",
+      features: [
+        "3 Yeni Bölge",
+        "Yeni Silah: Sentinel Hammer",
+        "Yeni Düşman Tipleri",
+        "Epik Final"
+      ],
+      releaseDate: "18 Mart 2021"
+    },
+    {
+      id: 3,
+      title: "Kozmetik Paketi",
+      description: "Yeni zırhlar, silah görünümleri ve oyuncu simgeleri ile DOOM Slayer'ını özelleştir.",
+      image: "/src/assets/images/hard mode/4.webp",
+      price: "149 TL",
+      badge: "Çıktı",
+      longDescription: "DOOM Eternal Kozmetik Paketi, oyuncuların Slayer'ını kişiselleştirmesine olanak tanıyan çeşitli görünümler sunuyor. Yeni zırh setleri, silah kaplamaları, profil simgeleri ve daha fazlası bu pakette yer alıyor.",
+      features: [
+        "5 Yeni Zırh Seti",
+        "10 Silah Kaplaması",
+        "20 Profil Simgesi",
+        "15 Nameplates"
+      ],
+      releaseDate: "5 Haziran 2020"
+    },
+    {
+      id: 4,
+      title: "Yeni İçerik Paketi",
+      description: "Yakında gelecek yeni içerik paketi ile DOOM evreninde yeni maceralar yaşa.",
+      image: "/src/assets/images/ekran ss/4.webp",
+      price: "TBA",
+      badge: "Yakında",
+      longDescription: "DOOM Eternal için gelecek olan yeni içerik paketi, oyuna tamamen yeni bir macera ve hikaye ekleyecek. Yeni bölgeler, silahlar ve düşmanlar ile DOOM evrenindeki maceranıza devam edeceksiniz.",
+      features: [
+        "Yeni Hikaye İçeriği",
+        "Yeni Silahlar",
+        "Yeni Düşmanlar",
+        "Yeni Bölgeler"
+      ],
+      releaseDate: "2024"
+    }
+  ];
+
+  // Open DLC details modal
+  const openDlcModal = (id: number) => {
+    setSelectedDlc(id);
+  };
+
+  // Close DLC details modal
+  const closeDlcModal = () => {
+    setSelectedDlc(null);
   };
 
   return (
@@ -210,11 +303,12 @@ function App() {
               <button className="btn-secondary">Daha Fazla Bilgi</button>
             </div>
           </div>
-          <div className="hero-scroll-indicator">
-            <div className="scroll-arrow"></div>
-            <div className="scroll-text">Aşağı Kaydır</div>
-          </div>
         </section>
+
+        <div className="hero-scroll-indicator">
+          <div className="scroll-arrow"></div>
+          <div className="scroll-text">Aşağı Kaydır</div>
+        </div>
 
         {/* Game Info Tabs */}
         <div className="game-tabs">
@@ -304,8 +398,8 @@ function App() {
                       playsInline
                       className="info-video"
                       controls
+                      src={videos[currentVideoIndex].src}
                     >
-                      <source src={videos[currentVideoIndex].src} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                     <div className="video-controls">
@@ -386,8 +480,8 @@ function App() {
                       ref={secondVideoRef}
                       controls 
                       className="featured-video"
+                      src={videos[currentVideoIndex].src}
                     >
-                      <source src={videos[currentVideoIndex].src} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                     <h3>{videos[currentVideoIndex].title}</h3>
@@ -446,57 +540,20 @@ function App() {
               <div className="dlc-content fade-in">
                 <h2 className="section-title">DLC Paketleri</h2>
                 <div className="dlc-grid">
-                  <div className="dlc-card">
-                    <div className="dlc-image">
-                      <img src="/src/assets/images/hard mode/2.webp" alt="The Ancient Gods - Part 1" />
-                      <div className="dlc-badge">Çıktı</div>
+                  {dlcPackages.map((dlc) => (
+                    <div className="dlc-card" key={dlc.id} onClick={() => openDlcModal(dlc.id)}>
+                      <div className="dlc-image">
+                        <img src={dlc.image} alt={dlc.title} />
+                        <div className={`dlc-badge ${dlc.badge === 'Yakında' ? 'coming-soon' : ''}`}>{dlc.badge}</div>
+                      </div>
+                      <div className="dlc-info">
+                        <h3>{dlc.title}</h3>
+                        <p>{dlc.description}</p>
+                        <div className="dlc-price">{dlc.price}</div>
+                        <button className="dlc-buy-btn" disabled={dlc.badge === 'Yakında'}>{dlc.badge === 'Yakında' ? 'Ön Sipariş' : 'Satın Al'}</button>
+                      </div>
                     </div>
-                    <div className="dlc-info">
-                      <h3>The Ancient Gods - Part 1</h3>
-                      <p>DOOM Slayer'ın yolculuğu devam ediyor. Cehennem'in ordularını yendikten sonra yeni bir mücadele başlar.</p>
-                      <div className="dlc-price">299 TL</div>
-                      <button className="dlc-buy-btn">Satın Al</button>
-                    </div>
-                  </div>
-                  
-                  <div className="dlc-card">
-                    <div className="dlc-image">
-                      <img src="/src/assets/images/hard mode/3.webp" alt="The Ancient Gods - Part 2" />
-                      <div className="dlc-badge">Çıktı</div>
-                    </div>
-                    <div className="dlc-info">
-                      <h3>The Ancient Gods - Part 2</h3>
-                      <p>Destansı hikayenin son bölümü. İnsanlık ve evrenin kaderi için son savaşı ver.</p>
-                      <div className="dlc-price">299 TL</div>
-                      <button className="dlc-buy-btn">Satın Al</button>
-                    </div>
-                  </div>
-                  
-                  <div className="dlc-card">
-                    <div className="dlc-image">
-                      <img src="/src/assets/images/hard mode/4.webp" alt="Cosmetic Pack" />
-                      <div className="dlc-badge">Çıktı</div>
-                    </div>
-                    <div className="dlc-info">
-                      <h3>Kozmetik Paketi</h3>
-                      <p>Yeni zırhlar, silah görünümleri ve oyuncu simgeleri ile DOOM Slayer'ını özelleştir.</p>
-                      <div className="dlc-price">149 TL</div>
-                      <button className="dlc-buy-btn">Satın Al</button>
-                    </div>
-                  </div>
-                  
-                  <div className="dlc-card coming-soon">
-                    <div className="dlc-image">
-                      <img src="/src/assets/images/ekran ss/4.webp" alt="New DLC Coming Soon" />
-                      <div className="dlc-badge">Yakında</div>
-                    </div>
-                    <div className="dlc-info">
-                      <h3>Yeni İçerik Paketi</h3>
-                      <p>Yakında gelecek yeni içerik paketi ile DOOM evreninde yeni maceralar yaşa.</p>
-                      <div className="dlc-price">TBA</div>
-                      <button className="dlc-buy-btn" disabled>Ön Sipariş</button>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -937,6 +994,60 @@ function App() {
               <button className="modal-nav-btn prev-btn" onClick={prevModalImage}>&#9664;</button>
               <button className="modal-nav-btn next-btn" onClick={nextModalImage}>&#9654;</button>
               <div className="modal-counter">{modalImageIndex + 1} / {allImages.length}</div>
+            </div>
+          </div>
+        )}
+
+        {/* DLC Modal */}
+        {selectedDlc && (
+          <div className="dlc-modal" onClick={closeDlcModal}>
+            <div className="dlc-modal-content" onClick={(e) => e.stopPropagation()}>
+              {dlcPackages.filter(dlc => dlc.id === selectedDlc).map((dlc) => (
+                <div key={dlc.id} className="dlc-modal-inner">
+                  <div className="dlc-modal-header">
+                    <h2>{dlc.title}</h2>
+                    <button className="dlc-modal-close" onClick={closeDlcModal}>×</button>
+                  </div>
+                  <div className="dlc-modal-body">
+                    <div className="dlc-modal-image">
+                      <img src={dlc.image} alt={dlc.title} />
+                      <div className={`dlc-badge ${dlc.badge === 'Yakında' ? 'coming-soon' : ''}`}>{dlc.badge}</div>
+                    </div>
+                    <div className="dlc-modal-info">
+                      <div className="dlc-modal-description">
+                        <h3>Açıklama</h3>
+                        <p>{dlc.longDescription}</p>
+                      </div>
+                      <div className="dlc-modal-details">
+                        <div className="dlc-modal-features">
+                          <h3>Özellikler</h3>
+                          <ul>
+                            {dlc.features.map((feature, index) => (
+                              <li key={index}>{feature}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="dlc-modal-metadata">
+                          <div className="dlc-meta-item">
+                            <span className="dlc-meta-label">Çıkış Tarihi:</span>
+                            <span className="dlc-meta-value">{dlc.releaseDate}</span>
+                          </div>
+                          <div className="dlc-meta-item">
+                            <span className="dlc-meta-label">Fiyat:</span>
+                            <span className="dlc-meta-value">{dlc.price}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="dlc-modal-footer">
+                    <button className="dlc-modal-buy" disabled={dlc.badge === 'Yakında'}>
+                      {dlc.badge === 'Yakında' ? 'Ön Sipariş' : 'Satın Al'}
+                    </button>
+                    <button className="dlc-modal-back" onClick={closeDlcModal}>Geri Dön</button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}
