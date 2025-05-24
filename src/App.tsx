@@ -1,15 +1,47 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
+import { Routes, Route, Link } from 'react-router-dom'
 import './App.css'
+import { AuthProvider, useAuth } from './contexts/AuthContext'
+import { CartProvider, useCart } from './contexts/CartContext'
+import LoginModal from './components/auth/LoginModal'
+import RegisterModal from './components/auth/RegisterModal'
+import UserProfile from './components/auth/UserProfile'
+import CartIndicator from './components/cart/CartIndicator'
+import CartModal from './components/cart/CartModal'
+import Oyunlar from './pages/Oyunlar'
+import Donanim from './pages/Donanim'
+import Hizmetler from './pages/Hizmetler'
+import Haberler from './pages/Haberler'
+import Magaza from './pages/Magaza'
+import Destek from './pages/Destek'
 
-function App() {
+interface DLC {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  price: string;
+  badge?: string;
+  longDescription: string;
+  features: string[];
+  releaseDate: string;
+}
+
+function AppContent() {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedDlc, setSelectedDlc] = useState<number | null>(null);
   const [volume, setVolume] = useState(0.5);
   const [currentResolution, setCurrentResolution] = useState('720p');
   const [modalImageIndex, setModalImageIndex] = useState(0);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const secondVideoRef = useRef<HTMLVideoElement>(null);
+  
+  const { isAuthenticated } = useAuth();
+  const { isCartOpen, toggleCart, addItem } = useCart();
 
   // Available resolutions for the video
   const resolutions = [
@@ -18,8 +50,8 @@ function App() {
     { label: '1080p', value: '1080p' }
   ];
 
-  // Videos data
-  const videos = [
+  // Videos data with useMemo to prevent unnecessary re-renders
+  const videos = useMemo(() => [
     {
       src: "/src/assets/images/DOOM The Dark Ages   Official Trailer 1 (4K)   Coming 2025.mp4",
       title: "DOOM The Dark Ages - Official Trailer"
@@ -28,7 +60,7 @@ function App() {
       src: "/src/assets/images/Doom Eternal _ Phobos Gameplay Trailer _ PS4.mp4",
       title: "DOOM Eternal Gameplay Trailer"
     }
-  ];
+  ], []);
 
   // All images that can be displayed in the modal
   const allImages = [
@@ -84,6 +116,20 @@ function App() {
     }
   }, [volume]);
 
+  // Update video source when currentVideoIndex changes
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.src = videos[currentVideoIndex].src;
+      videoRef.current.load();
+      videoRef.current.play().catch(e => console.log("Video play error:", e));
+    }
+    if (secondVideoRef.current) {
+      secondVideoRef.current.src = videos[currentVideoIndex].src;
+      secondVideoRef.current.load();
+      secondVideoRef.current.play().catch(e => console.log("Video play error:", e));
+    }
+  }, [currentVideoIndex, videos]);
+
   const openImageModal = (imageSrc: string) => {
     setSelectedImage(imageSrc);
     const index = allImages.findIndex(img => img.src === imageSrc);
@@ -124,12 +170,197 @@ function App() {
     );
   };
 
-  // Add scroll handler function
-  const handleScrollDown = () => {
-    const gameTabsSection = document.querySelector('.game-tabs');
-    if (gameTabsSection) {
-      gameTabsSection.scrollIntoView({ behavior: 'smooth' });
+  // DLC data
+  const dlcPackages: DLC[] = [
+    {
+      id: 1,
+      title: "The Ancient Gods - Part 1",
+      description: "DOOM Slayer'ın yolculuğu devam ediyor. Cehennem'in ordularını yendikten sonra yeni bir mücadele başlar.",
+      image: "/src/assets/images/hard mode/2.webp",
+      price: "299 TL",
+      badge: "Çıktı",
+      longDescription: "The Ancient Gods - Part 1, DOOM Eternal'ın ilk büyük hikaye genişletmesi olarak Slayer'ın maceralarına devam ediyor. Cehennemin Dünya'yı işgal etmesine son verdikten sonra, daha büyük bir tehdit ortaya çıkar. Yeni bölgeler keşfedilmeyi bekliyor, yeni silahlar ve yetenekler onları bekliyor ve daha tehlikeli düşmanlar ile yüzleşmek zorunda kalacak.",
+      features: [
+        "3 Yeni Bölge",
+        "Yeni Silahlar ve Yetenekler",
+        "Zorlayıcı Yeni Düşmanlar",
+        "Genişletilmiş Hikaye"
+      ],
+      releaseDate: "20 Ekim 2020"
+    },
+    {
+      id: 2,
+      title: "The Ancient Gods - Part 2",
+      description: "Destansı hikayenin son bölümü. İnsanlık ve evrenin kaderi için son savaşı ver.",
+      image: "/src/assets/images/hard mode/3.webp",
+      price: "299 TL",
+      badge: "Çıktı",
+      longDescription: "The Ancient Gods - Part 2, DOOM Eternal'ın destansı hikayesini muhteşem bir finalle sonlandırıyor. Slayer, insanlığın ve tüm boyutların kaderini belirleyecek nihai savaşa giriyor. Yeni bölgeler, daha güçlü silahlar ve daha zorlu düşmanlar bu genişletmede sizi bekliyor.",
+      features: [
+        "3 Yeni Bölge",
+        "Yeni Silah: Sentinel Hammer",
+        "Yeni Düşman Tipleri",
+        "Epik Final"
+      ],
+      releaseDate: "18 Mart 2021"
+    },
+    {
+      id: 3,
+      title: "Kozmetik Paketi",
+      description: "Yeni zırhlar, silah görünümleri ve oyuncu simgeleri ile DOOM Slayer'ını özelleştir.",
+      image: "/src/assets/images/hard mode/4.webp",
+      price: "149 TL",
+      badge: "Çıktı",
+      longDescription: "DOOM Eternal Kozmetik Paketi, oyuncuların Slayer'ını kişiselleştirmesine olanak tanıyan çeşitli görünümler sunuyor. Yeni zırh setleri, silah kaplamaları, profil simgeleri ve daha fazlası bu pakette yer alıyor.",
+      features: [
+        "5 Yeni Zırh Seti",
+        "10 Silah Kaplaması",
+        "20 Profil Simgesi",
+        "15 Nameplates"
+      ],
+      releaseDate: "5 Haziran 2020"
+    },
+    {
+      id: 4,
+      title: "Yeni İçerik Paketi",
+      description: "Yakında gelecek yeni içerik paketi ile DOOM evreninde yeni maceralar yaşa.",
+      image: "/src/assets/images/ekran ss/4.webp",
+      price: "TBA",
+      badge: "Yakında",
+      longDescription: "DOOM Eternal için gelecek olan yeni içerik paketi, oyuna tamamen yeni bir macera ve hikaye ekleyecek. Yeni bölgeler, silahlar ve düşmanlar ile DOOM evrenindeki maceranıza devam edeceksiniz.",
+      features: [
+        "Yeni Hikaye İçeriği",
+        "Yeni Silahlar",
+        "Yeni Düşmanlar",
+        "Yeni Bölgeler"
+      ],
+      releaseDate: "2024"
     }
+  ];
+
+  // Open DLC details modal
+  const openDlcModal = (id: number) => {
+    setSelectedDlc(id);
+  };
+
+  // Close DLC details modal
+  const closeDlcModal = () => {
+    setSelectedDlc(null);
+  };
+
+  // Yeni özellikler verisi ekliyorum
+  const featureDetails = [
+    {
+      id: 1,
+      title: "Geliştirilmiş Dövüş Sistemi",
+      image: "/src/assets/images/DOOM Eternal ana özellikleri/1.webp",
+      shortDescription: "Yeni silahlar, yetenekler ve düşman zayıf noktalarını kullanan stratejik dövüş sistemi ile Slayer'ın gücünü keşfedin.",
+      longDescription: "DOOM Eternal'ın geliştirilmiş dövüş sistemi, oyuncuların cehennem ordularına karşı daha stratejik ve heyecan verici bir şekilde savaşmasına olanak tanır. Yeni silahlar, modifikasyonlar ve yetenekler eklenmiştir. Glory Kill sistemi genişletilmiş olup, düşman zayıf noktalarına göre özel infaz animasyonları içerir.",
+      features: [
+        "Yükseltilmiş silah modifikasyonları",
+        "Geliştirilmiş Glory Kill sistemi",
+        "Yeni hareket mekanikleri",
+        "Zırh, sağlık ve cephane toplama stratejileri"
+      ]
+    },
+    {
+      id: 2,
+      title: "Yeni Düşmanlar",
+      image: "/src/assets/images/DOOM Eternal ana özellikleri/2.webp",
+      shortDescription: "Cehennemin yeni ve klasik iblis ordusuyla yüzleşin. Her biri kendi özel yetenekleri ve zayıf noktalarına sahip.",
+      longDescription: "DOOM Eternal'da karşılaşacağınız iblis ordusu, hem klasik DOOM düşmanlarını hem de tamamen yeni yaratıkları içerir. Her düşman türü, kendine özgü saldırı kalıpları ve zayıflıklarıyla oynanışta stratejik derinlik sağlar. Marauder, Doom Hunter ve Gladyator gibi yeni boss düşmanlar zorlu bir mücadele sunar.",
+      features: [
+        "12+ yeni düşman türü",
+        "Gelişmiş düşman yapay zekası",
+        "Çeşitli zayıf noktalar ve stratejiler",
+        "Epik boss savaşları"
+      ]
+    },
+    {
+      id: 3,
+      title: "Çok Boyutlu Dünyalar",
+      image: "/src/assets/images/DOOM Eternal ana özellikleri/3.webp",
+      shortDescription: "Yıkılmış dünyalardan antik tapınaklara, boyutlar arası yolculuğunuzda birbirinden farklı ortamlarda savaşın.",
+      longDescription: "DOOM Eternal oyuncuları cehennemin derinliklerinden, işgal edilmiş Dünya şehirlerine ve kadim Sentinel dünyasına kadar çeşitli lokasyonlara götürür. Her bölüm benzersiz görsel stilini ve çevre tasarımını sergiler, platform bulmacaları ve gizli alanlarla keşif yapmayı teşvik eder.",
+      features: [
+        "8+ benzersiz gezegen ve boyut",
+        "Detaylı çevre tasarımları",
+        "Hikaye odaklı keşif",
+        "Gizli bölgeler ve koleksiyonlar"
+      ]
+    },
+    {
+      id: 4,
+      title: "Horde Modu",
+      image: "/src/assets/images/hard mode/1.webp",
+      shortDescription: "Kendini tekrar tekrar cehennem dalgalarına karşı test et ve en yüksek skoru elde etmek için savaş.",
+      longDescription: "Horde Modu, oyuncuların sonsuz cehennem dalgalarına karşı hayatta kalma becerilerini test etmelerini sağlar. Her dalga giderek zorlaşır ve oyuncular çeşitli ödüller ve güçlendirmeler kazanabilir. Çeşitli arenalar ve zorluk seviyeleri ile yüksek tekrar oynanabilirlik sunar.",
+      features: [
+        "Sonsuz düşman dalgaları",
+        "Yüksek skor tabloları",
+        "Özel güçlendirmeler ve ödüller",
+        "Çoklu arena seçeneği"
+      ]
+    }
+  ];
+
+  // Seçili özellik için state
+  const [selectedFeature, setSelectedFeature] = useState<number | null>(null);
+
+  // Open Feature details modal
+  const openFeatureModal = (id: number) => {
+    setSelectedFeature(id);
+  };
+
+  // Close Feature details modal
+  const closeFeatureModal = () => {
+    setSelectedFeature(null);
+  };
+
+  // Open Login Modal
+  const openLoginModal = () => {
+    setIsLoginModalOpen(true);
+    setIsRegisterModalOpen(false);
+  };
+
+  // Open Register Modal
+  const openRegisterModal = () => {
+    setIsRegisterModalOpen(true);
+    setIsLoginModalOpen(false);
+  };
+
+  // Close Auth Modals
+  const closeAuthModals = () => {
+    setIsLoginModalOpen(false);
+    setIsRegisterModalOpen(false);
+  };
+
+  // Handle adding game to cart
+  const handleAddGameToCart = () => {
+    addItem({
+      id: 1,
+      title: "DOOM Eternal",
+      price: 499,
+      image: "/src/assets/images/ekran ss/1.webp",
+      type: "game"
+    });
+    
+    // Show feedback
+    alert("DOOM Eternal sepete eklendi!");
+  };
+
+  // Handle adding DLC to cart
+  const handleAddDlcToCart = (dlc: DLC) => {
+    addItem({
+      id: dlc.id,
+      title: dlc.title,
+      price: parseInt(dlc.price) || 299, // Default to 299 if parsing fails
+      image: dlc.image,
+      type: "dlc"
+    });
+    
+    // Show feedback
+    alert(`${dlc.title} sepete eklendi!`);
   };
 
   return (
@@ -150,16 +381,21 @@ function App() {
             </div>
             <nav className="main-nav">
               <ul>
-                <li><a href="#">Oyunlar</a></li>
-                <li><a href="#">Donanım</a></li>
-                <li><a href="#">Hizmetler</a></li>
-                <li><a href="#">Haberler</a></li>
-                <li><a href="#">Mağaza</a></li>
-                <li><a href="#">Destek</a></li>
+                <li><Link to="/oyunlar">Oyunlar</Link></li>
+                <li><Link to="/donanim">Donanım</Link></li>
+                <li><Link to="/hizmetler">Hizmetler</Link></li>
+                <li><Link to="/haberler">Haberler</Link></li>
+                <li><Link to="/magaza">Mağaza</Link></li>
+                <li><Link to="/destek">Destek</Link></li>
               </ul>
             </nav>
             <div className="header-actions">
-              <button className="btn-sign-in">Oturum Aç</button>
+              <CartIndicator />
+              {isAuthenticated ? (
+                <UserProfile />
+              ) : (
+                <button className="btn-sign-in" onClick={openLoginModal}>Oturum Aç</button>
+              )}
             </div>
           </div>
         </header>
@@ -214,13 +450,9 @@ function App() {
               <span className="badge">PS5 Optimize</span>
             </div>
             <div className="hero-buttons">
-              <button className="btn-primary">Şimdi Satın Al</button>
+              <button className="btn-primary" onClick={handleAddGameToCart}>Şimdi Satın Al</button>
               <button className="btn-secondary">Daha Fazla Bilgi</button>
             </div>
-          </div>
-          <div className="hero-scroll-indicator" onClick={handleScrollDown}>
-            <div className="scroll-arrow"></div>
-            <div className="scroll-text">Aşağı Kaydır</div>
           </div>
         </section>
 
@@ -312,8 +544,8 @@ function App() {
                       playsInline
                       className="info-video"
                       controls
+                      src={videos[currentVideoIndex].src}
                     >
-                      <source src={videos[currentVideoIndex].src} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                     <div className="video-controls">
@@ -361,26 +593,13 @@ function App() {
               <div className="features-content fade-in">
                 <h2 className="section-title">Özellikler</h2>
                 <div className="features-grid">
-                  <div className="feature-card">
-                    <img src="/src/assets/images/DOOM Eternal ana özellikleri/1.webp" alt="Geliştirilmiş Dövüş Sistemi" />
-                    <h3>Geliştirilmiş Dövüş Sistemi</h3>
-                    <p>Yeni silahlar, yetenekler ve düşman zayıf noktalarını kullanan stratejik dövüş sistemi ile Slayer'ın gücünü keşfedin.</p>
-                  </div>
-                  <div className="feature-card">
-                    <img src="/src/assets/images/DOOM Eternal ana özellikleri/2.webp" alt="Yeni Düşmanlar" />
-                    <h3>Yeni Düşmanlar</h3>
-                    <p>Cehennemin yeni ve klasik iblis ordusuyla yüzleşin. Her biri kendi özel yetenekleri ve zayıf noktalarına sahip.</p>
-                  </div>
-                  <div className="feature-card">
-                    <img src="/src/assets/images/DOOM Eternal ana özellikleri/3.webp" alt="Çok Boyutlu Dünyalar" />
-                    <h3>Çok Boyutlu Dünyalar</h3>
-                    <p>Yıkılmış dünyalardan antik tapınaklara, boyutlar arası yolculuğunuzda birbirinden farklı ortamlarda savaşın.</p>
-                  </div>
-                  <div className="feature-card">
-                    <img src="/src/assets/images/hard mode/1.webp" alt="Hardcore Mod" />
-                    <h3>Horde Modu</h3>
-                    <p>Kendini tekrar tekrar cehennem dalgalarına karşı test et ve en yüksek skoru elde etmek için savaş.</p>
-                  </div>
+                  {featureDetails.map((feature) => (
+                    <div className="feature-card" key={feature.id} onClick={() => openFeatureModal(feature.id)}>
+                      <img src={feature.image} alt={feature.title} />
+                      <h3>{feature.title}</h3>
+                      <p>{feature.shortDescription}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -394,8 +613,8 @@ function App() {
                       ref={secondVideoRef}
                       controls 
                       className="featured-video"
+                      src={videos[currentVideoIndex].src}
                     >
-                      <source src={videos[currentVideoIndex].src} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                     <h3>{videos[currentVideoIndex].title}</h3>
@@ -454,57 +673,31 @@ function App() {
               <div className="dlc-content fade-in">
                 <h2 className="section-title">DLC Paketleri</h2>
                 <div className="dlc-grid">
-                  <div className="dlc-card">
-                    <div className="dlc-image">
-                      <img src="/src/assets/images/hard mode/2.webp" alt="The Ancient Gods - Part 1" />
-                      <div className="dlc-badge">Çıktı</div>
+                  {dlcPackages.map((dlc) => (
+                    <div className="dlc-card" key={dlc.id} onClick={() => openDlcModal(dlc.id)}>
+                      <div className="dlc-image">
+                        <img src={dlc.image} alt={dlc.title} />
+                        <div className={`dlc-badge ${dlc.badge === 'Yakında' ? 'coming-soon' : ''}`}>{dlc.badge}</div>
+                      </div>
+                      <div className="dlc-info">
+                        <h3>{dlc.title}</h3>
+                        <p>{dlc.description}</p>
+                        <div className="dlc-price">{dlc.price}</div>
+                        <button 
+                          className="dlc-buy-btn"
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent opening modal
+                            if (dlc.badge !== 'Yakında') {
+                              handleAddDlcToCart(dlc);
+                            }
+                          }}
+                          disabled={dlc.badge === 'Yakında'}
+                        >
+                          {dlc.badge === 'Yakında' ? 'Yakında' : 'Sepete Ekle'}
+                        </button>
+                      </div>
                     </div>
-                    <div className="dlc-info">
-                      <h3>The Ancient Gods - Part 1</h3>
-                      <p>DOOM Slayer'ın yolculuğu devam ediyor. Cehennem'in ordularını yendikten sonra yeni bir mücadele başlar.</p>
-                      <div className="dlc-price">299 TL</div>
-                      <button className="dlc-buy-btn">Satın Al</button>
-                    </div>
-                  </div>
-                  
-                  <div className="dlc-card">
-                    <div className="dlc-image">
-                      <img src="/src/assets/images/hard mode/3.webp" alt="The Ancient Gods - Part 2" />
-                      <div className="dlc-badge">Çıktı</div>
-                    </div>
-                    <div className="dlc-info">
-                      <h3>The Ancient Gods - Part 2</h3>
-                      <p>Destansı hikayenin son bölümü. İnsanlık ve evrenin kaderi için son savaşı ver.</p>
-                      <div className="dlc-price">299 TL</div>
-                      <button className="dlc-buy-btn">Satın Al</button>
-                    </div>
-                  </div>
-                  
-                  <div className="dlc-card">
-                    <div className="dlc-image">
-                      <img src="/src/assets/images/hard mode/4.webp" alt="Cosmetic Pack" />
-                      <div className="dlc-badge">Çıktı</div>
-                    </div>
-                    <div className="dlc-info">
-                      <h3>Kozmetik Paketi</h3>
-                      <p>Yeni zırhlar, silah görünümleri ve oyuncu simgeleri ile DOOM Slayer'ını özelleştir.</p>
-                      <div className="dlc-price">149 TL</div>
-                      <button className="dlc-buy-btn">Satın Al</button>
-                    </div>
-                  </div>
-                  
-                  <div className="dlc-card coming-soon">
-                    <div className="dlc-image">
-                      <img src="/src/assets/images/ekran ss/4.webp" alt="New DLC Coming Soon" />
-                      <div className="dlc-badge">Yakında</div>
-                    </div>
-                    <div className="dlc-info">
-                      <h3>Yeni İçerik Paketi</h3>
-                      <p>Yakında gelecek yeni içerik paketi ile DOOM evreninde yeni maceralar yaşa.</p>
-                      <div className="dlc-price">TBA</div>
-                      <button className="dlc-buy-btn" disabled>Ön Sipariş</button>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -930,7 +1123,7 @@ function App() {
                 <a href="#">Çerezler</a>
               </div>
               <div className="footer-copyright">
-                © 2023 Sony Interactive Entertainment LLC. All rights reserved.
+                &copy; 2023 Sony Interactive Entertainment LLC. All rights reserved.
               </div>
             </div>
           </div>
@@ -948,9 +1141,136 @@ function App() {
             </div>
           </div>
         )}
+
+        {/* DLC Modal */}
+        {selectedDlc && (
+          <div className="dlc-modal-overlay" onClick={closeDlcModal}>
+            <div className="dlc-modal" onClick={(e) => e.stopPropagation()}>
+              <button className="dlc-modal-close" onClick={closeDlcModal}>×</button>
+              
+              {dlcPackages.filter(dlc => dlc.id === selectedDlc).map(dlc => (
+                <div key={dlc.id} className="dlc-modal-content">
+                  <div className="dlc-modal-image">
+                    <img src={dlc.image} alt={dlc.title} />
+                    {dlc.badge && (
+                      <div className={`dlc-modal-badge ${dlc.badge === 'Yakında' ? 'special' : ''}`}>
+                        {dlc.badge}
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="dlc-modal-details">
+                    <h2 className="dlc-modal-title">{dlc.title}</h2>
+                    <p className="dlc-modal-description">{dlc.longDescription}</p>
+                    
+                    <div className="dlc-modal-features">
+                      <h3>Özellikler</h3>
+                      <ul>
+                        {dlc.features.map((feature, index) => (
+                          <li key={index}>{feature}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div className="dlc-modal-info">
+                      <div className="dlc-modal-release">
+                        <span>Çıkış Tarihi:</span> {dlc.releaseDate}
+                      </div>
+                      <div className="dlc-modal-price">
+                        <span>Fiyat:</span> {dlc.price}
+                      </div>
+                    </div>
+                    
+                    <button 
+                      className="dlc-modal-buy" 
+                      disabled={dlc.badge === 'Yakında'}
+                      onClick={() => {
+                        handleAddDlcToCart(dlc);
+                        closeDlcModal();
+                      }}
+                    >
+                      {dlc.badge === 'Yakında' ? 'Yakında' : 'Sepete Ekle'}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Feature Modal */}
+        {selectedFeature !== null && (
+          <div className="modal-overlay" onClick={closeFeatureModal}>
+            <div className="feature-modal" onClick={(e) => e.stopPropagation()}>
+              {featureDetails.filter(feature => feature.id === selectedFeature).map((feature) => (
+                <div key={feature.id} className="feature-modal-inner">
+                  <div className="feature-modal-header">
+                    <h2>{feature.title}</h2>
+                    <button className="modal-close-btn" onClick={closeFeatureModal}>×</button>
+                  </div>
+                  <div className="feature-modal-body">
+                    <div className="feature-modal-image">
+                      <img src={feature.image} alt={feature.title} />
+                    </div>
+                    <div className="feature-modal-info">
+                      <div className="feature-modal-description">
+                        <p>{feature.longDescription}</p>
+                      </div>
+                      <div className="feature-modal-details">
+                        <h3>Özellikler</h3>
+                        <ul>
+                          {feature.features.map((item, index) => (
+                            <li key={index}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="feature-modal-footer">
+                    <button className="feature-modal-back" onClick={closeFeatureModal}>Kapat</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* Auth Modals */}
+        <LoginModal 
+          isOpen={isLoginModalOpen} 
+          onClose={closeAuthModals} 
+          onSwitchToRegister={openRegisterModal} 
+        />
+        
+        <RegisterModal 
+          isOpen={isRegisterModalOpen} 
+          onClose={closeAuthModals} 
+          onSwitchToLogin={openLoginModal} 
+        />
+        
+        {/* Cart Modal */}
+        {isCartOpen && <CartModal onClose={toggleCart} />}
       </div>
     </div>
-  )
+  );
 }
 
-export default App 
+function App() {
+  return (
+    <AuthProvider>
+      <CartProvider>
+        <Routes>
+          <Route path="/" element={<AppContent />} />
+          <Route path="/oyunlar" element={<Oyunlar />} />
+          <Route path="/donanim" element={<Donanim />} />
+          <Route path="/hizmetler" element={<Hizmetler />} />
+          <Route path="/haberler" element={<Haberler />} />
+          <Route path="/magaza" element={<Magaza />} />
+          <Route path="/destek" element={<Destek />} />
+        </Routes>
+      </CartProvider>
+    </AuthProvider>
+  );
+}
+
+export default App

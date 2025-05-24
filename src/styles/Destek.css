@@ -1,0 +1,691 @@
+/* Destek.css - DOOM Destek Sayfası Stilleri */
+
+/* İnceleme Bölümü Stilleri */
+.reviews-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.reviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.review-button {
+  background-color: #e60012;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.review-button:hover {
+  background-color: #ff1a2d;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(230, 0, 18, 0.4);
+}
+
+.review-form-container {
+  background-color: rgba(40, 40, 40, 0.6);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.rating-input {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.star-label {
+  cursor: pointer;
+}
+
+.star-label input {
+  display: none;
+}
+
+.star-label i {
+  font-size: 1.5rem;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+.star-label i.active {
+  color: #ffc107;
+}
+
+.star-label:hover i {
+  color: #ffc107;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cancel-button {
+  background-color: transparent;
+  color: #f0f0f0;
+  border: 1px solid #f0f0f0;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cancel-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.review-item {
+  background-color: rgba(40, 40, 40, 0.6);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.review-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.review-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.review-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #b0b0b0;
+}
+
+.review-author {
+  font-weight: 500;
+  color: #d0d0d0;
+}
+
+.review-rating {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.review-rating i {
+  color: #555;
+}
+
+.review-rating i.active {
+  color: #ffc107;
+}
+
+.review-content {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.review-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.recommend-yes {
+  color: #4caf50;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.recommend-no {
+  color: #f44336;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.review-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.review-action-button {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #b0b0b0;
+  border-radius: 4px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.review-action-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f0f0f0;
+}
+
+.destek-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #f0f0f0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.destek-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.destek-header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #e60012;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(230, 0, 18, 0.5);
+}
+
+.destek-header p {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* Sekme Butonları */
+.destek-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tab-button {
+  background-color: rgba(40, 40, 40, 0.8);
+  color: #f0f0f0;
+  border: none;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tab-button i {
+  font-size: 1.2rem;
+}
+
+.tab-button:hover {
+  background-color: rgba(230, 0, 18, 0.8);
+  transform: translateY(-2px);
+}
+
+.tab-button.active {
+  background-color: #e60012;
+  box-shadow: 0 0 15px rgba(230, 0, 18, 0.7);
+}
+
+/* İçerik Alanı */
+.destek-content {
+  background-color: rgba(30, 30, 30, 0.8);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  min-height: 400px;
+}
+
+.destek-content h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: #e60012;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  border-bottom: 1px solid rgba(255, 0, 0, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+/* SSS Bölümü */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.faq-item {
+  background-color: rgba(40, 40, 40, 0.6);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.faq-question {
+  padding: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.faq-question:hover {
+  background-color: rgba(60, 60, 60, 0.6);
+}
+
+.faq-question.active {
+  background-color: rgba(230, 0, 18, 0.2);
+}
+
+.faq-question h3 {
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 500;
+  flex: 1;
+}
+
+.toggle-icon {
+  color: #e60012;
+  font-size: 1.2rem;
+}
+
+.faq-answer {
+  padding: 0 1.2rem 1.2rem;
+  line-height: 1.6;
+  color: #d0d0d0;
+}
+
+.faq-answer p {
+  margin-bottom: 0.8rem;
+}
+
+/* İletişim Formu */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+label {
+  font-size: 0.9rem;
+  color: #b0b0b0;
+}
+
+input, select, textarea {
+  padding: 0.8rem;
+  background-color: rgba(20, 20, 20, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #f0f0f0;
+  font-family: 'Roboto', sans-serif;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #e60012;
+  box-shadow: 0 0 0 2px rgba(230, 0, 18, 0.3);
+}
+
+.file-upload input {
+  padding: 0.5rem 0;
+  background: transparent;
+  border: none;
+}
+
+.file-upload small {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 0.3rem;
+  display: block;
+}
+
+.submit-button {
+  background-color: #e60012;
+  color: white;
+  border: none;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.submit-button:hover {
+  background-color: #ff1a2d;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(230, 0, 18, 0.4);
+}
+
+.form-success {
+  text-align: center;
+  padding: 2rem;
+}
+
+.form-success i {
+  font-size: 3rem;
+  color: #4caf50;
+  margin-bottom: 1rem;
+}
+
+.form-success h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Rehberler Bölümü */
+.guides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.guide-card {
+  background-color: rgba(40, 40, 40, 0.6);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.guide-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.guide-icon {
+  font-size: 2rem;
+  color: #e60012;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.guide-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #f0f0f0;
+}
+
+.guide-card p {
+  color: #b0b0b0;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+  line-height: 1.5;
+}
+
+.guide-button {
+  background-color: transparent;
+  color: #e60012;
+  border: 1px solid #e60012;
+  padding: 0.7rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.guide-button:hover {
+  background-color: rgba(230, 0, 18, 0.1);
+}
+
+/* Sunucu Durumu */
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.status-card {
+  background-color: rgba(40, 40, 40, 0.6);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.status-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.status-icon.online {
+  color: #4caf50;
+}
+
+.status-icon.issues {
+  color: #ff9800;
+}
+
+.status-icon.offline {
+  color: #f44336;
+}
+
+.status-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.status-text {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.status-text.online {
+  color: #4caf50;
+}
+
+.status-text.issues {
+  color: #ff9800;
+}
+
+.status-text.offline {
+  color: #f44336;
+}
+
+.status-details {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+}
+
+.maintenance-info {
+  background-color: rgba(40, 40, 40, 0.6);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.maintenance-info h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #f0f0f0;
+}
+
+.maintenance-item {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.maintenance-date {
+  background-color: rgba(230, 0, 18, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  color: #e60012;
+  height: fit-content;
+}
+
+.maintenance-details h4 {
+  margin-bottom: 0.5rem;
+}
+
+.maintenance-details p {
+  color: #b0b0b0;
+  line-height: 1.5;
+}
+
+/* İletişim Bilgileri */
+.destek-contact-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.contact-card {
+  background-color: rgba(30, 30, 30, 0.8);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+}
+
+.contact-icon {
+  font-size: 2.5rem;
+  color: #e60012;
+  margin-bottom: 1rem;
+}
+
+.contact-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.contact-card p {
+  color: #b0b0b0;
+  margin-bottom: 1.5rem;
+}
+
+.contact-button, .contact-link {
+  display: inline-block;
+  background-color: #e60012;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.contact-button:hover, .contact-link:hover {
+  background-color: #ff1a2d;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(230, 0, 18, 0.4);
+}
+
+/* Duyarlı Tasarım */
+@media (max-width: 768px) {
+  .destek-container {
+    padding: 1rem;
+  }
+  
+  .destek-tabs {
+    flex-direction: column;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  .maintenance-item {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .maintenance-date {
+    align-self: flex-start;
+  }
+}
