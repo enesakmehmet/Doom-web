@@ -1,0 +1,27 @@
+.doom-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #2b0000 0%, #b71c1c 100%);
+  color: #fff;
+  border: 2px solid #ffeb3b;
+  border-radius: 6px;
+  font-family: 'Orbitron', 'Arial Black', Arial, sans-serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 10px 22px;
+  box-shadow: 0 2px 8px #000a, 0 0 10px 2px #b71c1c44;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+.doom-btn:hover {
+  background: linear-gradient(90deg, #b71c1c 0%, #2b0000 100%);
+  transform: scale(1.05) rotate(-1deg);
+  box-shadow: 0 4px 16px #b71c1c88, 0 0 20px 4px #ffeb3b33;
+  border-color: #fff200;
+}
+.doom-btn-icon {
+  display: flex;
+}

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import NewsModal from '../components/news/NewsModal';
+import StatisticsPanel from '../components/StatisticsPanel';
+import { DoomButton } from '../components/DoomButton';
+import { DoomIcon } from '../components/DoomIcon';
+import '../components/doom-button.css';
 
 const newsData = [
   {
@@ -54,7 +58,10 @@ const Haberler = () => {
 
   return (
     <div className="page-content">
-      <h1>Haberler</h1>
+      <h1 style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+  <DoomIcon name="skull" size={36} /> Haberler
+</h1>
+      <StatisticsPanel />
       <div className="news-list">
         {newsData.map((news, idx) => (
           <div className="news-item card" key={idx}>
@@ -63,7 +70,9 @@ const Haberler = () => {
               <h2>{news.title}</h2>
               <span className="news-date">{news.date}</span>
               <p>{news.summary}</p>
-              <button className="news-readmore" onClick={() => handleOpen(idx)}>Devamını Oku</button>
+              <DoomButton icon="bolt" onClick={() => handleOpen(idx)}>
+  Devamını Oku
+</DoomButton>
             </div>
           </div>
         ))}
