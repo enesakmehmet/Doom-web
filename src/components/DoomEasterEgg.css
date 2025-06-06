@@ -1,0 +1,58 @@
+.doom-easter-egg-container {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  z-index: 9999;
+  opacity: 0.12;
+  transition: opacity 0.3s;
+}
+.doom-easter-egg-container:hover {
+  opacity: 0.95;
+}
+.doom-easter-egg-input {
+  background: #181818;
+  color: #ff4500;
+  border: 2px solid #ff4500;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-family: 'Orbitron', monospace;
+  outline: none;
+  width: 160px;
+  box-shadow: 0 2px 12px #0008;
+  letter-spacing: 2px;
+  transition: border 0.2s;
+}
+.doom-easter-egg-input:focus {
+  border: 2px solid #ffb800;
+}
+.doom-easter-egg-toast {
+  margin-top: 0.5rem;
+  background: #1e1e1e;
+  border: 2px solid #ffb800;
+  color: #ffb800;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.1rem;
+  font-family: 'Orbitron', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 16px #0009;
+  animation: easterEggToastFadeIn 0.7s;
+}
+.cheat-code {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #ff4500;
+  margin-bottom: 0.2rem;
+  letter-spacing: 3px;
+}
+.cheat-desc {
+  font-size: 1rem;
+  color: #ffb800;
+}
+@keyframes easterEggToastFadeIn {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}

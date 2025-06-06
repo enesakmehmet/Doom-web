@@ -27,6 +27,9 @@ interface DLC {
   releaseDate: string;
 }
 
+import SecretDoomButton from './components/SecretDoomButton';
+import DoomEasterEgg from './components/DoomEasterEgg';
+
 function AppContent() {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -1050,6 +1053,10 @@ function AppContent() {
           </div>
         </div>
 
+        {/* Gizli Doom Butonu */}
+        <SecretDoomButton />
+        {/* Doom Easter Egg Cheat Input */}
+        <DoomEasterEgg />
         {/* Footer */}
         <footer className="footer">
           <div className="footer-container">
