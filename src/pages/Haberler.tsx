@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import NewsModal from '../components/news/NewsModal';
-<<<<<<< HEAD
 import StatisticsPanel from '../components/StatisticsPanel';
 import { DoomButton } from '../components/DoomButton';
 import { DoomIcon } from '../components/DoomIcon';
 import '../components/doom-button.css';
-=======
->>>>>>> 81067d34b79eb295e2c38ef2ac72720360727fa9
 
 const newsData = [
   {
@@ -61,14 +58,10 @@ const Haberler = () => {
 
   return (
     <div className="page-content">
-<<<<<<< HEAD
       <h1 style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-  <DoomIcon name="skull" size={36} /> Haberler
-</h1>
+        <DoomIcon name="skull" size={36} /> Haberler
+      </h1>
       <StatisticsPanel />
-=======
-      <h1>Haberler</h1>
->>>>>>> 81067d34b79eb295e2c38ef2ac72720360727fa9
       <div className="news-list">
         {newsData.map((news, idx) => (
           <div className="news-item card" key={idx}>
@@ -77,13 +70,9 @@ const Haberler = () => {
               <h2>{news.title}</h2>
               <span className="news-date">{news.date}</span>
               <p>{news.summary}</p>
-<<<<<<< HEAD
               <DoomButton icon="bolt" onClick={() => handleOpen(idx)}>
-  Devamını Oku
-</DoomButton>
-=======
-              <button className="news-readmore" onClick={() => handleOpen(idx)}>Devamını Oku</button>
->>>>>>> 81067d34b79eb295e2c38ef2ac72720360727fa9
+                Devamını Oku
+              </DoomButton>
             </div>
           </div>
         ))}

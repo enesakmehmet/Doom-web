@@ -14,6 +14,8 @@ import Hizmetler from './pages/Hizmetler'
 import Haberler from './pages/Haberler'
 import Magaza from './pages/Magaza'
 import Destek from './pages/Destek'
+import SecretDoomButton from './components/SecretDoomButton'
+import DoomEasterEgg from './components/DoomEasterEgg'
 
 interface DLC {
   id: number;
@@ -27,12 +29,8 @@ interface DLC {
   releaseDate: string;
 }
 
-<<<<<<< HEAD
-import SecretDoomButton from './components/SecretDoomButton';
-import DoomEasterEgg from './components/DoomEasterEgg';
 
-=======
->>>>>>> 81067d34b79eb295e2c38ef2ac72720360727fa9
+
 function AppContent() {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -1056,13 +1054,10 @@ function AppContent() {
           </div>
         </div>
 
-<<<<<<< HEAD
         {/* Gizli Doom Butonu */}
         <SecretDoomButton />
         {/* Doom Easter Egg Cheat Input */}
         <DoomEasterEgg />
-=======
->>>>>>> 81067d34b79eb295e2c38ef2ac72720360727fa9
         {/* Footer */}
         <footer className="footer">
           <div className="footer-container">

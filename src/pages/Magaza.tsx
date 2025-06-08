@@ -1,5 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
 import { DoomIcon } from '../components/DoomIcon';
 import { DoomButton } from '../components/DoomButton';
 import { magazaProducts } from './magazaProducts';
@@ -23,13 +22,6 @@ const Magaza = () => (
         </div>
       ))}
     </div>
-=======
-
-const Magaza = () => (
-  <div className="page-content">
-    <h1>Mağaza</h1>
-    <p>Mağaza sayfasına hoş geldiniz! DOOM ürünlerini satın alabilirsiniz.</p>
->>>>>>> 81067d34b79eb295e2c38ef2ac72720360727fa9
   </div>
 );
 
