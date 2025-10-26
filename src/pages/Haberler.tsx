@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import NewsModal from '../components/news/NewsModal';
 import StatisticsPanel from '../components/StatisticsPanel';
 import { DoomButton } from '../components/DoomButton';

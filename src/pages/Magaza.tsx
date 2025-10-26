@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { DoomIcon } from '../components/DoomIcon';
 import { DoomButton } from '../components/DoomButton';
 import { magazaProducts } from './magazaProducts';

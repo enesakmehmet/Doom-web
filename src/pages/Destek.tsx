@@ -1,6 +1,6 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { motion } from 'framer-motion';
-import '../styles/Destek.css';
+import { useState, ChangeEvent, FormEvent } from "react";
+import { motion } from "framer-motion";
+import "../styles/Destek.css";
 
 interface FormData {
   name: string;
@@ -41,29 +41,29 @@ interface Review extends ReviewData {
 }
 
 const Destek = () => {
-  const [activeTab, setActiveTab] = useState<string>('faq');
+  const [activeTab, setActiveTab] = useState<string>("faq");
   const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-    gameVersion: 'DOOM Eternal',
-    platform: 'PC',
-    priority: 'normal'
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+    gameVersion: "DOOM Eternal",
+    platform: "PC",
+    priority: "normal",
   });
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
-  
+
   // İnceleme formu için state'ler
   const [reviewData, setReviewData] = useState<ReviewData>({
-    name: '',
-    email: '',
+    name: "",
+    email: "",
     rating: 5,
-    title: '',
-    review: '',
-    gameVersion: 'DOOM Eternal',
-    playTime: '10-50 saat',
-    recommend: true
+    title: "",
+    review: "",
+    gameVersion: "DOOM Eternal",
+    playTime: "10-50 saat",
+    recommend: true,
   });
   const [reviewSubmitted, setReviewSubmitted] = useState<boolean>(false);
   const [showReviewForm, setShowReviewForm] = useState<boolean>(false);
@@ -74,13 +74,14 @@ const Destek = () => {
       email: "mehmet@example.com",
       rating: 5,
       title: "Mükemmel bir oyun!",
-      review: "DOOM Eternal, FPS türünün en iyi örneklerinden biri. Akıcı oynanış, etkileyici grafikler ve müthiş müzikleriyle tam bir başyapıt. Oyun içi destek de çok hızlı ve yardımcı.",
+      review:
+        "DOOM Eternal, FPS türünün en iyi örneklerinden biri. Akıcı oynanış, etkileyici grafikler ve müthiş müzikleriyle tam bir başyapıt. Oyun içi destek de çok hızlı ve yardımcı.",
       gameVersion: "DOOM Eternal",
       playTime: "50+ saat",
       recommend: true,
       date: "15 Nisan 2025",
       likes: 24,
-      dislikes: 2
+      dislikes: 2,
     },
     {
       id: 2,
@@ -88,13 +89,14 @@ const Destek = () => {
       email: "ayse@example.com",
       rating: 4,
       title: "Harika ama birkaç sorun var",
-      review: "Oyun genel olarak çok iyi, ancak bazı performans sorunları yaşadım. Destek ekibi sorunu çözmeme yardımcı oldu ama biraz zaman aldı. Yine de kesinlikle tavsiye ederim.",
+      review:
+        "Oyun genel olarak çok iyi, ancak bazı performans sorunları yaşadım. Destek ekibi sorunu çözmeme yardımcı oldu ama biraz zaman aldı. Yine de kesinlikle tavsiye ederim.",
       gameVersion: "DOOM Eternal",
       playTime: "10-50 saat",
       recommend: true,
       date: "10 Nisan 2025",
       likes: 15,
-      dislikes: 3
+      dislikes: 3,
     },
     {
       id: 3,
@@ -102,75 +104,80 @@ const Destek = () => {
       email: "ahmet@example.com",
       rating: 5,
       title: "Destek ekibi harika çalışıyor",
-      review: "Oyunda yaşadığım tüm sorunlarda destek ekibi anında yardımcı oldu. Özellikle canlı sohbet özelliği çok kullanışlı. Oyunun kendisi zaten muhteşem, ama destek hizmetleri de bir o kadar kaliteli.",
+      review:
+        "Oyunda yaşadığım tüm sorunlarda destek ekibi anında yardımcı oldu. Özellikle canlı sohbet özelliği çok kullanışlı. Oyunun kendisi zaten muhteşem, ama destek hizmetleri de bir o kadar kaliteli.",
       gameVersion: "DOOM Eternal",
       playTime: "50+ saat",
       recommend: true,
       date: "5 Nisan 2025",
       likes: 32,
-      dislikes: 1
-    }
+      dislikes: 1,
+    },
   ]);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
-  
+
   // İnceleme formu için input değişikliği
-  const handleReviewInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleReviewInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value, type } = e.target;
-    
-    if (type === 'checkbox') {
+
+    if (type === "checkbox") {
       const checkbox = e.target as HTMLInputElement;
       setReviewData({
         ...reviewData,
-        [name]: checkbox.checked
+        [name]: checkbox.checked,
       });
-    } else if (name === 'rating') {
+    } else if (name === "rating") {
       setReviewData({
         ...reviewData,
-        [name]: parseInt(value)
+        [name]: parseInt(value),
       });
     } else {
       setReviewData({
         ...reviewData,
-        [name]: value
+        [name]: value,
       });
     }
   };
-  
+
   // İnceleme gönderme işlemi
   const handleReviewSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     // Yeni inceleme oluştur
     const newReview: Review = {
       ...reviewData,
       id: reviews.length + 1,
-      date: new Date().toLocaleDateString('tr-TR'),
+      date: new Date().toLocaleDateString("tr-TR"),
       likes: 0,
-      dislikes: 0
+      dislikes: 0,
     };
-    
+
     // İncelemelere ekle
     setReviews([newReview, ...reviews]);
     setReviewSubmitted(true);
-    
+
     // Form gönderildikten sonra formu sıfırla
     setTimeout(() => {
       setReviewData({
-        name: '',
-        email: '',
+        name: "",
+        email: "",
         rating: 5,
-        title: '',
-        review: '',
-        gameVersion: 'DOOM Eternal',
-        playTime: '10-50 saat',
-        recommend: true
+        title: "",
+        review: "",
+        gameVersion: "DOOM Eternal",
+        playTime: "10-50 saat",
+        recommend: true,
       });
       setReviewSubmitted(false);
       setShowReviewForm(false);
@@ -180,98 +187,114 @@ const Destek = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Form gönderme işlemi burada gerçekleştirilecek
-    console.log('Form data:', formData);
+    console.log("Form data:", formData);
     setFormSubmitted(true);
-    
+
     // Form gönderildikten sonra formu sıfırla
     setTimeout(() => {
       setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
-        gameVersion: 'DOOM Eternal',
-        platform: 'PC',
-        priority: 'normal'
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+        gameVersion: "DOOM Eternal",
+        platform: "PC",
+        priority: "normal",
       });
       setFormSubmitted(false);
     }, 5000);
   };
 
-  const toggleQuestion = (index) => {
+  const toggleQuestion = (index: number) => {
     setActiveQuestion(activeQuestion === index ? null : index);
   };
 
   const faqItems: FaqItem[] = [
     {
-      question: "DOOM Eternal'da performans sorunları yaşıyorum. Ne yapabilirim?",
-      answer: "Performans sorunlarını çözmek için şu adımları deneyebilirsiniz:\n\n1. Grafik ayarlarınızı düşürün\n2. Sürücülerinizin güncel olduğundan emin olun\n3. Oyun dosyalarınızın bütünlüğünü doğrulayın\n4. Arka planda çalışan gereksiz uygulamaları kapatın\n5. İşletim sisteminizi güncelleyin"
+      question:
+        "DOOM Eternal'da performans sorunları yaşıyorum. Ne yapabilirim?",
+      answer:
+        "Performans sorunlarını çözmek için şu adımları deneyebilirsiniz:\n\n1. Grafik ayarlarınızı düşürün\n2. Sürücülerinizin güncel olduğundan emin olun\n3. Oyun dosyalarınızın bütünlüğünü doğrulayın\n4. Arka planda çalışan gereksiz uygulamaları kapatın\n5. İşletim sisteminizi güncelleyin",
     },
     {
       question: "Oyun çöküyor veya donuyor. Nasıl düzeltebilirim?",
-      answer: "Oyunun çökmesi veya donması durumunda:\n\n1. Oyun dosyalarınızı doğrulayın\n2. Ekran kartı sürücülerinizi güncelleyin\n3. DirectX ve Visual C++ Redistributable paketlerini yeniden yükleyin\n4. Oyunu yönetici olarak çalıştırmayı deneyin\n5. Windows Olay Görüntüleyicisi'nde hata kayıtlarını kontrol edin"
+      answer:
+        "Oyunun çökmesi veya donması durumunda:\n\n1. Oyun dosyalarınızı doğrulayın\n2. Ekran kartı sürücülerinizi güncelleyin\n3. DirectX ve Visual C++ Redistributable paketlerini yeniden yükleyin\n4. Oyunu yönetici olarak çalıştırmayı deneyin\n5. Windows Olay Görüntüleyicisi'nde hata kayıtlarını kontrol edin",
     },
     {
       question: "Çevrimiçi özelliklere bağlanamıyorum. Ne yapmalıyım?",
-      answer: "Çevrimiçi bağlantı sorunları için:\n\n1. İnternet bağlantınızı kontrol edin\n2. Güvenlik duvarı ve antivirüs ayarlarınızı kontrol edin\n3. Yönlendiricinizi yeniden başlatın\n4. DNS ayarlarınızı değiştirmeyi deneyin\n5. Bethesda.net sunucu durumunu kontrol edin"
+      answer:
+        "Çevrimiçi bağlantı sorunları için:\n\n1. İnternet bağlantınızı kontrol edin\n2. Güvenlik duvarı ve antivirüs ayarlarınızı kontrol edin\n3. Yönlendiricinizi yeniden başlatın\n4. DNS ayarlarınızı değiştirmeyi deneyin\n5. Bethesda.net sunucu durumunu kontrol edin",
     },
     {
       question: "DLC içeriğim yüklenmiyor veya erişilemiyor. Ne yapabilirim?",
-      answer: "DLC sorunları için:\n\n1. DLC'nin hesabınıza doğru şekilde tanımlandığından emin olun\n2. Oyunu yeniden başlatın\n3. Oyun dosyalarını doğrulayın\n4. DLC'yi yeniden indirin\n5. Platformunuzun (Steam, Epic, vb.) destek ekibiyle iletişime geçin"
+      answer:
+        "DLC sorunları için:\n\n1. DLC'nin hesabınıza doğru şekilde tanımlandığından emin olun\n2. Oyunu yeniden başlatın\n3. Oyun dosyalarını doğrulayın\n4. DLC'yi yeniden indirin\n5. Platformunuzun (Steam, Epic, vb.) destek ekibiyle iletişime geçin",
     },
     {
       question: "Kayıtlı oyunum kayboldu. Kurtarabilir miyim?",
-      answer: "Kayıtlı oyun sorunları için:\n\n1. Bulut senkronizasyonunu kontrol edin\n2. Yedek kayıt dosyalarını arayın\n3. %LOCALAPPDATA%\\id Software\\DOOM Eternal\\saved klasörünü kontrol edin\n4. Steam/Epic/Bethesda bulut kayıtlarını kontrol edin\n5. Otomatik yedekleme özelliğini etkinleştirin"
+      answer:
+        "Kayıtlı oyun sorunları için:\n\n1. Bulut senkronizasyonunu kontrol edin\n2. Yedek kayıt dosyalarını arayın\n3. %LOCALAPPDATA%\\id Software\\DOOM Eternal\\saved klasörünü kontrol edin\n4. Steam/Epic/Bethesda bulut kayıtlarını kontrol edin\n5. Otomatik yedekleme özelliğini etkinleştirin",
     },
     {
-      question: "Oyun içi satın alımlarla ilgili sorun yaşıyorum. Ne yapmalıyım?",
-      answer: "Satın alma sorunları için:\n\n1. Ödeme yönteminizi doğrulayın\n2. Hesap bakiyenizi kontrol edin\n3. Satın alma geçmişinizi inceleyin\n4. Platformunuzun (Steam, Epic, vb.) destek ekibiyle iletişime geçin\n5. Fatura bilgilerinizi kontrol edin"
+      question:
+        "Oyun içi satın alımlarla ilgili sorun yaşıyorum. Ne yapmalıyım?",
+      answer:
+        "Satın alma sorunları için:\n\n1. Ödeme yönteminizi doğrulayın\n2. Hesap bakiyenizi kontrol edin\n3. Satın alma geçmişinizi inceleyin\n4. Platformunuzun (Steam, Epic, vb.) destek ekibiyle iletişime geçin\n5. Fatura bilgilerinizi kontrol edin",
     },
     {
       question: "Oyun kontrollerimi özelleştiremiyorum. Nasıl düzeltebilirim?",
-      answer: "Kontrol sorunları için:\n\n1. Oyun ayarlarını sıfırlayın\n2. Kontrol cihazınızın güncel olduğundan emin olun\n3. Alternatif bir kontrol cihazı deneyin\n4. Oyun dosyalarını doğrulayın\n5. Kontrol yapılandırma dosyasını manuel olarak düzenleyin"
+      answer:
+        "Kontrol sorunları için:\n\n1. Oyun ayarlarını sıfırlayın\n2. Kontrol cihazınızın güncel olduğundan emin olun\n3. Alternatif bir kontrol cihazı deneyin\n4. Oyun dosyalarını doğrulayın\n5. Kontrol yapılandırma dosyasını manuel olarak düzenleyin",
     },
     {
       question: "Oyun sesinde sorunlar yaşıyorum. Nasıl çözebilirim?",
-      answer: "Ses sorunları için:\n\n1. Ses sürücülerinizi güncelleyin\n2. Ses çıkış cihazınızı kontrol edin\n3. Oyun ses ayarlarını sıfırlayın\n4. Windows ses ayarlarını kontrol edin\n5. Ses dosyalarını doğrulayın"
-    }
+      answer:
+        "Ses sorunları için:\n\n1. Ses sürücülerinizi güncelleyin\n2. Ses çıkış cihazınızı kontrol edin\n3. Oyun ses ayarlarını sıfırlayın\n4. Windows ses ayarlarını kontrol edin\n5. Ses dosyalarını doğrulayın",
+    },
   ];
 
   const troubleshootingGuides: GuideItem[] = [
     {
       title: "Sistem Gereksinimleri Optimizasyonu",
-      content: "DOOM Eternal'ın en iyi performansla çalışması için sistem gereksinimlerini ve optimizasyon ipuçlarını içeren kapsamlı rehber."
+      content:
+        "DOOM Eternal'ın en iyi performansla çalışması için sistem gereksinimlerini ve optimizasyon ipuçlarını içeren kapsamlı rehber.",
     },
     {
       title: "Çökme ve Donma Sorunları",
-      content: "Oyunun çökmesi veya donması durumunda izlenecek adımları ve çözümleri içeren detaylı rehber."
+      content:
+        "Oyunun çökmesi veya donması durumunda izlenecek adımları ve çözümleri içeren detaylı rehber.",
     },
     {
       title: "Çevrimiçi Bağlantı Sorunları",
-      content: "Battlemode ve diğer çevrimiçi özelliklere bağlanma sorunlarını çözmek için adım adım rehber."
+      content:
+        "Battlemode ve diğer çevrimiçi özelliklere bağlanma sorunlarını çözmek için adım adım rehber.",
     },
     {
       title: "Grafik ve Görüntü Sorunları",
-      content: "Ekran tearing, artifacting ve diğer görsel sorunları çözmek için kapsamlı rehber."
+      content:
+        "Ekran tearing, artifacting ve diğer görsel sorunları çözmek için kapsamlı rehber.",
     },
     {
       title: "Ses ve Müzik Sorunları",
-      content: "Ses kesilmesi, gecikme veya tamamen kaybolma sorunlarını çözmek için rehber."
+      content:
+        "Ses kesilmesi, gecikme veya tamamen kaybolma sorunlarını çözmek için rehber.",
     },
     {
       title: "Kontrol ve Giriş Cihazı Sorunları",
-      content: "Klavye, fare ve oyun kontrolcüsü sorunlarını çözmek için detaylı rehber."
-    }
+      content:
+        "Klavye, fare ve oyun kontrolcüsü sorunlarını çözmek için detaylı rehber.",
+    },
   ];
 
   const pageVariants = {
     initial: { opacity: 0 },
     animate: { opacity: 1, transition: { duration: 0.5 } },
-    exit: { opacity: 0, transition: { duration: 0.5 } }
+    exit: { opacity: 0, transition: { duration: 0.5 } },
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="destek-container"
       initial="initial"
       animate="animate"
@@ -280,52 +303,58 @@ const Destek = () => {
     >
       <div className="destek-header">
         <h1>DOOM Destek Merkezi</h1>
-        <p>Cehennemde sorun mu yaşıyorsunuz? Endişelenmeyin, size yardımcı olmak için buradayız!</p>
+        <p>
+          Cehennemde sorun mu yaşıyorsunuz? Endişelenmeyin, size yardımcı olmak
+          için buradayız!
+        </p>
       </div>
 
       <div className="destek-tabs">
-        <button 
-          className={`tab-button ${activeTab === 'faq' ? 'active' : ''}`}
-          onClick={() => setActiveTab('faq')}
+        <button
+          className={`tab-button ${activeTab === "faq" ? "active" : ""}`}
+          onClick={() => setActiveTab("faq")}
         >
           <i className="fas fa-question-circle"></i> Sık Sorulan Sorular
         </button>
-        <button 
-          className={`tab-button ${activeTab === 'contact' ? 'active' : ''}`}
-          onClick={() => setActiveTab('contact')}
+        <button
+          className={`tab-button ${activeTab === "contact" ? "active" : ""}`}
+          onClick={() => setActiveTab("contact")}
         >
           <i className="fas fa-envelope"></i> İletişim Formu
         </button>
-        <button 
-          className={`tab-button ${activeTab === 'guides' ? 'active' : ''}`}
-          onClick={() => setActiveTab('guides')}
+        <button
+          className={`tab-button ${activeTab === "guides" ? "active" : ""}`}
+          onClick={() => setActiveTab("guides")}
         >
           <i className="fas fa-book"></i> Sorun Giderme Rehberleri
         </button>
-        <button 
-          className={`tab-button ${activeTab === 'status' ? 'active' : ''}`}
-          onClick={() => setActiveTab('status')}
+        <button
+          className={`tab-button ${activeTab === "status" ? "active" : ""}`}
+          onClick={() => setActiveTab("status")}
         >
           <i className="fas fa-server"></i> Sunucu Durumu
         </button>
-        <button 
-          className={`tab-button ${activeTab === 'reviews' ? 'active' : ''}`}
-          onClick={() => setActiveTab('reviews')}
+        <button
+          className={`tab-button ${activeTab === "reviews" ? "active" : ""}`}
+          onClick={() => setActiveTab("reviews")}
         >
           <i className="fas fa-star"></i> İncelemeler
         </button>
       </div>
 
       <div className="destek-content">
-        {activeTab === 'reviews' && (
+        {activeTab === "reviews" && (
           <div className="reviews-section">
             <h2>Kullanıcı İncelemeleri</h2>
-            
+
             {!showReviewForm ? (
               <div className="reviews-header">
-                <p>Destek hizmetlerimiz hakkında düşüncelerinizi paylaşın ve diğer kullanıcıların deneyimlerini okuyun.</p>
-                <button 
-                  className="review-button" 
+                <p>
+                  Destek hizmetlerimiz hakkında düşüncelerinizi paylaşın ve
+                  diğer kullanıcıların deneyimlerini okuyun.
+                </p>
+                <button
+                  className="review-button"
                   onClick={() => setShowReviewForm(true)}
                 >
                   <i className="fas fa-edit"></i> İnceleme Yaz
@@ -335,7 +364,10 @@ const Destek = () => {
               <div className="form-success">
                 <i className="fas fa-check-circle"></i>
                 <h3>İncelemeniz Alındı!</h3>
-                <p>Değerli geri bildiriminiz için teşekkür ederiz. İncelemeniz başarıyla yayınlandı.</p>
+                <p>
+                  Değerli geri bildiriminiz için teşekkür ederiz. İncelemeniz
+                  başarıyla yayınlandı.
+                </p>
               </div>
             ) : (
               <div className="review-form-container">
@@ -344,28 +376,28 @@ const Destek = () => {
                   <div className="form-row">
                     <div className="form-group">
                       <label htmlFor="name">Adınız</label>
-                      <input 
-                        type="text" 
-                        id="name" 
-                        name="name" 
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
                         value={reviewData.name}
                         onChange={handleReviewInputChange}
-                        required 
+                        required
                       />
                     </div>
                     <div className="form-group">
                       <label htmlFor="email">E-posta Adresiniz</label>
-                      <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
                         value={reviewData.email}
                         onChange={handleReviewInputChange}
-                        required 
+                        required
                       />
                     </div>
                   </div>
-                  
+
                   <div className="form-group">
                     <label>Puanınız</label>
                     <div className="rating-input">
@@ -378,30 +410,34 @@ const Destek = () => {
                             checked={reviewData.rating === star}
                             onChange={handleReviewInputChange}
                           />
-                          <i className={`fas fa-star ${reviewData.rating >= star ? 'active' : ''}`}></i>
+                          <i
+                            className={`fas fa-star ${
+                              reviewData.rating >= star ? "active" : ""
+                            }`}
+                          ></i>
                         </label>
                       ))}
                     </div>
                   </div>
-                  
+
                   <div className="form-group">
                     <label htmlFor="title">İnceleme Başlığı</label>
-                    <input 
-                      type="text" 
-                      id="title" 
-                      name="title" 
+                    <input
+                      type="text"
+                      id="title"
+                      name="title"
                       value={reviewData.title}
                       onChange={handleReviewInputChange}
-                      required 
+                      required
                       placeholder="İncelemeniz için kısa bir başlık yazın"
                     />
                   </div>
-                  
+
                   <div className="form-group">
                     <label htmlFor="review">İncelemeniz</label>
-                    <textarea 
-                      id="review" 
-                      name="review" 
+                    <textarea
+                      id="review"
+                      name="review"
                       rows={5}
                       value={reviewData.review}
                       onChange={handleReviewInputChange}
@@ -409,12 +445,12 @@ const Destek = () => {
                       placeholder="Destek hizmetlerimiz hakkındaki deneyiminizi paylaşın"
                     ></textarea>
                   </div>
-                  
+
                   <div className="form-row">
                     <div className="form-group">
                       <label htmlFor="gameVersion">Oyun Versiyonu</label>
-                      <select 
-                        id="gameVersion" 
+                      <select
+                        id="gameVersion"
                         name="gameVersion"
                         value={reviewData.gameVersion}
                         onChange={handleReviewInputChange}
@@ -428,8 +464,8 @@ const Destek = () => {
                     </div>
                     <div className="form-group">
                       <label htmlFor="playTime">Oyun Süresi</label>
-                      <select 
-                        id="playTime" 
+                      <select
+                        id="playTime"
                         name="playTime"
                         value={reviewData.playTime}
                         onChange={handleReviewInputChange}
@@ -440,21 +476,25 @@ const Destek = () => {
                       </select>
                     </div>
                   </div>
-                  
+
                   <div className="form-group checkbox-group">
                     <label className="checkbox-label">
-                      <input 
-                        type="checkbox" 
-                        name="recommend" 
+                      <input
+                        type="checkbox"
+                        name="recommend"
                         checked={reviewData.recommend}
                         onChange={handleReviewInputChange}
                       />
                       Bu oyunu başkalarına tavsiye ederim
                     </label>
                   </div>
-                  
+
                   <div className="form-buttons">
-                    <button type="button" className="cancel-button" onClick={() => setShowReviewForm(false)}>
+                    <button
+                      type="button"
+                      className="cancel-button"
+                      onClick={() => setShowReviewForm(false)}
+                    >
                       <i className="fas fa-times"></i> İptal
                     </button>
                     <button type="submit" className="submit-button">
@@ -464,7 +504,7 @@ const Destek = () => {
                 </form>
               </div>
             )}
-            
+
             <div className="reviews-list">
               {reviews.map((review) => (
                 <div className="review-item" key={review.id}>
@@ -474,15 +514,21 @@ const Destek = () => {
                       <div className="review-meta">
                         <span className="review-author">{review.name}</span>
                         <span className="review-date">{review.date}</span>
-                        <span className="review-version">{review.gameVersion}</span>
-                        <span className="review-playtime">{review.playTime}</span>
+                        <span className="review-version">
+                          {review.gameVersion}
+                        </span>
+                        <span className="review-playtime">
+                          {review.playTime}
+                        </span>
                       </div>
                     </div>
                     <div className="review-rating">
                       {[...Array(5)].map((_, i) => (
-                        <i 
-                          key={i} 
-                          className={`fas fa-star ${i < review.rating ? 'active' : ''}`}
+                        <i
+                          key={i}
+                          className={`fas fa-star ${
+                            i < review.rating ? "active" : ""
+                          }`}
                         ></i>
                       ))}
                     </div>
@@ -504,7 +550,7 @@ const Destek = () => {
                     </div>
                     <div className="review-actions">
                       <button className="review-action-button">
-                        <i className="fas fa-thumbs-up"></i> 
+                        <i className="fas fa-thumbs-up"></i>
                         <span>{review.likes}</span>
                       </button>
                       <button className="review-action-button">
@@ -521,15 +567,17 @@ const Destek = () => {
             </div>
           </div>
         )}
-        
-        {activeTab === 'faq' && (
+
+        {activeTab === "faq" && (
           <div className="faq-section">
             <h2>Sık Sorulan Sorular</h2>
             <div className="faq-list">
               {faqItems.map((item, index) => (
                 <div className="faq-item" key={index}>
-                  <div 
-                    className={`faq-question ${activeQuestion === index ? 'active' : ''}`}
+                  <div
+                    className={`faq-question ${
+                      activeQuestion === index ? "active" : ""
+                    }`}
                     onClick={() => toggleQuestion(index)}
                   >
                     <h3>{item.question}</h3>
@@ -543,7 +591,7 @@ const Destek = () => {
                   </div>
                   {activeQuestion === index && (
                     <div className="faq-answer">
-                      {item.answer.split('\n').map((paragraph, i) => (
+                      {item.answer.split("\n").map((paragraph, i) => (
                         <p key={i}>{paragraph}</p>
                       ))}
                     </div>
@@ -554,44 +602,48 @@ const Destek = () => {
           </div>
         )}
 
-        {activeTab === 'contact' && (
+        {activeTab === "contact" && (
           <div className="contact-section">
             <h2>Destek Talebi Oluştur</h2>
             {formSubmitted ? (
               <div className="form-success">
                 <i className="fas fa-check-circle"></i>
                 <h3>Talebiniz Alındı!</h3>
-                <p>Destek ekibimiz en kısa sürede size yanıt verecektir. Talebinizin referans numarası: <strong>#{Math.floor(Math.random() * 1000000)}</strong></p>
+                <p>
+                  Destek ekibimiz en kısa sürede size yanıt verecektir.
+                  Talebinizin referans numarası:{" "}
+                  <strong>#{Math.floor(Math.random() * 1000000)}</strong>
+                </p>
               </div>
             ) : (
               <form className="contact-form" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="name">Adınız Soyadınız</label>
-                  <input 
-                    type="text" 
-                    id="name" 
-                    name="name" 
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    required 
+                    required
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="email">E-posta Adresiniz</label>
-                  <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    required 
+                    required
                   />
                 </div>
                 <div className="form-row">
                   <div className="form-group">
                     <label htmlFor="gameVersion">Oyun Versiyonu</label>
-                    <select 
-                      id="gameVersion" 
+                    <select
+                      id="gameVersion"
                       name="gameVersion"
                       value={formData.gameVersion}
                       onChange={handleInputChange}
@@ -605,8 +657,8 @@ const Destek = () => {
                   </div>
                   <div className="form-group">
                     <label htmlFor="platform">Platform</label>
-                    <select 
-                      id="platform" 
+                    <select
+                      id="platform"
                       name="platform"
                       value={formData.platform}
                       onChange={handleInputChange}
@@ -622,21 +674,21 @@ const Destek = () => {
                 </div>
                 <div className="form-group">
                   <label htmlFor="subject">Konu</label>
-                  <input 
-                    type="text" 
-                    id="subject" 
-                    name="subject" 
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    required 
+                    required
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="message">Mesajınız</label>
-                  <textarea 
-                    id="message" 
-                    name="message" 
-                    rows="6"
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={6}
                     value={formData.message}
                     onChange={handleInputChange}
                     required
@@ -644,22 +696,31 @@ const Destek = () => {
                 </div>
                 <div className="form-group">
                   <label htmlFor="priority">Öncelik</label>
-                  <select 
-                    id="priority" 
+                  <select
+                    id="priority"
                     name="priority"
                     value={formData.priority}
                     onChange={handleInputChange}
                   >
                     <option value="low">Düşük - Genel Soru</option>
                     <option value="normal">Normal - Küçük Sorun</option>
-                    <option value="high">Yüksek - Oyun Oynamayı Engelleyen Sorun</option>
-                    <option value="critical">Kritik - Satın Alma/Hesap Sorunu</option>
+                    <option value="high">
+                      Yüksek - Oyun Oynamayı Engelleyen Sorun
+                    </option>
+                    <option value="critical">
+                      Kritik - Satın Alma/Hesap Sorunu
+                    </option>
                   </select>
                 </div>
                 <div className="form-group file-upload">
-                  <label htmlFor="file">Ekran Görüntüsü veya Dosya Ekle (isteğe bağlı)</label>
+                  <label htmlFor="file">
+                    Ekran Görüntüsü veya Dosya Ekle (isteğe bağlı)
+                  </label>
                   <input type="file" id="file" name="file" />
-                  <small>Maksimum dosya boyutu: 10MB. İzin verilen formatlar: JPG, PNG, PDF, ZIP</small>
+                  <small>
+                    Maksimum dosya boyutu: 10MB. İzin verilen formatlar: JPG,
+                    PNG, PDF, ZIP
+                  </small>
                 </div>
                 <button type="submit" className="submit-button">
                   <i className="fas fa-paper-plane"></i> Talebi Gönder
@@ -669,7 +730,7 @@ const Destek = () => {
           </div>
         )}
 
-        {activeTab === 'guides' && (
+        {activeTab === "guides" && (
           <div className="guides-section">
             <h2>Sorun Giderme Rehberleri</h2>
             <div className="guides-grid">
@@ -687,7 +748,7 @@ const Destek = () => {
           </div>
         )}
 
-        {activeTab === 'status' && (
+        {activeTab === "status" && (
           <div className="status-section">
             <h2>Sunucu Durumu</h2>
             <div className="status-grid">
@@ -713,7 +774,9 @@ const Destek = () => {
                 </div>
                 <h3>DLC Doğrulama Hizmeti</h3>
                 <p className="status-text issues">Kısmi Kesinti</p>
-                <p className="status-details">Bazı kullanıcılar DLC içeriklerine erişimde sorun yaşayabilir</p>
+                <p className="status-details">
+                  Bazı kullanıcılar DLC içeriklerine erişimde sorun yaşayabilir
+                </p>
               </div>
               <div className="status-card">
                 <div className="status-icon online">
@@ -731,7 +794,11 @@ const Destek = () => {
                 <div className="maintenance-date">18 Nisan 2025</div>
                 <div className="maintenance-details">
                   <h4>Battlemode Sunucuları</h4>
-                  <p>Battlemode sunucuları 18 Nisan 2025 tarihinde 03:00 - 07:00 (TSİ) saatleri arasında bakım nedeniyle geçici olarak çevrimdışı olacaktır.</p>
+                  <p>
+                    Battlemode sunucuları 18 Nisan 2025 tarihinde 03:00 - 07:00
+                    (TSİ) saatleri arasında bakım nedeniyle geçici olarak
+                    çevrimdışı olacaktır.
+                  </p>
                 </div>
               </div>
             </div>
@@ -754,7 +821,9 @@ const Destek = () => {
           </div>
           <h3>E-posta Desteği</h3>
           <p>Detaylı sorularınız için e-posta ile bize ulaşın</p>
-          <a href="mailto:support@doom-eternal.com" className="contact-link">support@doom-eternal.com</a>
+          <a href="mailto:support@doom-eternal.com" className="contact-link">
+            support@doom-eternal.com
+          </a>
         </div>
         <div className="contact-card">
           <div className="contact-icon">

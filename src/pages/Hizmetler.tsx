@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { servicesLibrary } from '../components/services/ServicesLibrary';
 
 const Hizmetler = () => (
