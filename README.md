@@ -1,4 +1,2 @@
 DOOM Eternal Web Portal Bu proje, DOOM Eternal dünyasını modern web teknolojileriyle birleştiren, yüksek performanslı ve görsel olarak zengin bir portal uygulamasıdır. ✨ Özellikler 🎬 Sinematik Deneyim: 4K fragmanlar ve etkileyici animasyonlar. 🛒 Mağaza Sistemi: Oyun ve DLC paketleri için entegre sepet sistemi. 🔐 Kullanıcı Yönetimi: Oturum açma ve kayıt olma modalları. ⚡ Akıcı UI: Framer Motion ile hazırlanmış glitch efektleri ve geçişler. 📊 İstatistikler: Recharts ile görselleştirilmiş eleştirmen puanları. 🛠️ Kullanılan Teknolojiler Framework: React 18 Dil: TypeScript Stil: CSS + Framer Motion Build Tool: Vite Yönlendirme: React Router DOM....
 
-
-//////////////////////
